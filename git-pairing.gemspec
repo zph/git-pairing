@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s| 
   s.name = 'git-pairing'
-  s.version = "0.2.3"
+  s.version = "0.2.4"
   s.author = "Steve Quince"
   s.email = 'steve.quince@gmail.com'
   s.homepage = 'https://github.com/squince/git-pairing'
