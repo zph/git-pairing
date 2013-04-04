@@ -33,7 +33,9 @@ is duplicated
 
 
 ## Installing
-Simply clone this repo and execute the following command in your
+To grab the latest stable release `gem install git-pairing`
+
+Or, clone this repo and execute the following command in your
 terminal/console of choice
 
 ```

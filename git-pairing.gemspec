@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s| 
   s.name = 'git-pairing'
-  s.version = "0.2.0"
+  s.version = "0.2.1"
   s.author = "Steve Quince"
   s.email = 'steve.quince@gmail.com'
   s.homepage = 'https://github.com/squince/git-pairing'
@@ -14,7 +14,7 @@ spec = Gem::Specification.new do |s|
   s.require_paths << 'lib'
   s.has_rdoc = false
   s.bindir = 'bin'
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.executables   = 'git-pair'
 
   # List dependencies here
   s.add_dependency('awesome_print')
