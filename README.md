@@ -1,0 +1,49 @@
+# INTRO 
+
+Share code authorship when pairing and using git/github.
+Works well with my fork of promptula to show which git pair is currently
+configured in a git repo.
+
+# GEM 
+
+## Features
+
+* adds a new command to git, `git pair`
+* changes the git config `[user] name` to list multiple commit authors
+* maintains a list of pairing partners
+* specifies multiple commit authors by their initials
+* prompts to configure new partners as needed
+* remembers partners per repository
+* reverts back to original global settings
+
+See help for more details on the commands
+
+```
+   $ git pair help
+```
+
+## Known Issues
+
+* Does not play entirely nicely with github since they use the commiter's 
+name and email address to generate statistics and links 
+* Will not play nice with [Chris Kampmeier's git-pair](https://github.com/chrisk/git-pair) gem since they use similar
+git command syntax (namely `git pair`) 
+* Some intermittent weirdness on some machines where help command text
+is duplicated
+
+
+## Installing
+Simply clone this repo and execute the following command in your
+terminal/console of choice
+
+```
+    $ gem install git-pairing 
+```
+
+## Building
+
+The included Rakefile will build the taz gem, e.g.,
+
+```
+   $ rake
+```

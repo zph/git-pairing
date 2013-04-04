@@ -1,0 +1,80 @@
+#!/usr/bin/env ruby
+
+=begin
+# 1.9 adds realpath to resolve symlinks; 1.8 doesn't
+# have this method, so we add it so we get resolved symlinks
+# and compatibility
+unless File.respond_to? :realpath
+  class File #:nodoc:
+    def self.realpath path
+      return realpath(File.readlink(path)) if symlink?(path)
+      path
+    end
+  end
+end
+
+$: << File.expand_path(File.dirname(File.realpath(__FILE__)) + '/../lib')
+#$: << File.expand_path(File.dirname(__FILE__) + './../lib')
+=end
+
+require 'gli'
+require 'git-pair'
+
+include GLI::App
+
+program_desc 'Keeps track of co-authors of git commits'
+preserve_argv
+wrap_help_text :verbatim
+
+# config file is put into the user's home directory
+CFG_FILE = File.join(File.expand_path(ENV['HOME']),'.pairs')
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abort and not call the chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+
+  # Create config if it doesn't already exist
+  unless File.exists?(CFG_FILE)
+    name = `git config --global --get user.name`
+    initials = ""
+    name.strip.downcase.split(/ /).each { |n| initials << n.split(//)[0] }
+    email = `git config --get user.email`
+    username = email.split("@")[0]
+    $pairs_conf = YAML::Store.new(CFG_FILE)
+    $pairs_conf.transaction do
+      $pairs_conf["pairs"] = {"#{initials}" => {'name'=>"#{name.strip}", 'username'=>"#{username}", 'email'=>"#{email.strip}"} }
+      #puts "in conf create"
+      #ap $pairs_conf
+    end
+  end
+
+  # Load .pairs config
+  if (File.exist?(CFG_FILE))
+    $pairs_conf = YAML::load(File.open(CFG_FILE, 'r'))
+    #puts "in conf load"
+    #ap $pairs_conf
+  else
+    exit_now!("No ~/.pairs config file found")
+  end
+
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+# put command rb files into ./lib/commands/
+commands_from './../lib/commands'
+
+exit run(ARGV)
