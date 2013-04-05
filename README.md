@@ -49,3 +49,14 @@ The included Rakefile will build the taz gem, e.g.,
 ```
    $ rake
 ```
+
+## Configuration
+
+The first time that `git pair` is executed, it will create a config file
+in the user's home directory `~/.pairs`
+
+This is just a yaml file that you can edit manually or update via the
+available commands (e.g., `git pair add sq`).  Included in the config is
+the default delimiters used when setting the pair names and initials
+into the git config.  Feel free to update these as well if the defaults
+do not suit your fancy.

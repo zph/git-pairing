@@ -1,22 +1,5 @@
 #!/usr/bin/env ruby
 
-=begin
-# 1.9 adds realpath to resolve symlinks; 1.8 doesn't
-# have this method, so we add it so we get resolved symlinks
-# and compatibility
-unless File.respond_to? :realpath
-  class File #:nodoc:
-    def self.realpath path
-      return realpath(File.readlink(path)) if symlink?(path)
-      path
-    end
-  end
-end
-
-$: << File.expand_path(File.dirname(File.realpath(__FILE__)) + '/../lib')
-#$: << File.expand_path(File.dirname(__FILE__) + './../lib')
-=end
-
 require 'gli'
 require 'git-pair'
 
@@ -42,19 +25,16 @@ pre do |global,command,options,args|
     name.strip.downcase.split(/ /).each { |n| initials << n.split(//)[0] }
     email = `git config --get user.email`
     username = email.split("@")[0]
-    $pairs_conf = YAML::Store.new(CFG_FILE)
-    $pairs_conf.transaction do
-      $pairs_conf["pairs"] = {"#{initials}" => {'name'=>"#{name.strip}", 'username'=>"#{username}", 'email'=>"#{email.strip}"} }
-      #puts "in conf create"
-      #ap $pairs_conf
+    default_conf = YAML::Store.new(CFG_FILE)
+    default_conf.transaction do
+      default_conf["pairs"] = {"#{initials}" => {'name'=>"#{name.strip}", 'username'=>"#{username}", 'email'=>"#{email.strip}"} }
+      default_conf["delimiters"] = {"name" => " / ", "initials" => " "}
     end
   end
 
   # Load .pairs config
   if (File.exist?(CFG_FILE))
     $pairs_conf = YAML::load(File.open(CFG_FILE, 'r'))
-    #puts "in conf load"
-    #ap $pairs_conf
   else
     exit_now!("No ~/.pairs config file found")
   end
@@ -74,7 +54,7 @@ on_error do |exception|
   true
 end
 
-# put command rb files into ./lib/commands/
+# put command rb files into ./../lib/commands/
 commands_from './../lib/commands'
 
 exit run(ARGV)

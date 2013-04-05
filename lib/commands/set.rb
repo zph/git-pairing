@@ -41,8 +41,8 @@ command :set do |c|
             sorted_authors << a[0]
             sorted_initials << a[1]
             if size > 1 && authors.index(a) < size-1
-              sorted_authors << " / "
-              sorted_initials << " "
+              sorted_authors << $pairs_conf['delimiters']['name']  #" / "
+              sorted_initials << $pairs_conf['delimiters']['initials']    #" "
             end
           end
           #puts"sorted authors: #{sorted_authors}"
