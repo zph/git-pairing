@@ -2,25 +2,25 @@ desc 'switches pairing partners: $git pair set <user-initials-1> [<user-initials
 command :set do |c|
   c.action do |global_options,options,args|
     # Check if we are in a git repo
+    partners = []
     unless system 'git status > /dev/null 2>/dev/null'
-      puts"Not in a git repo"
+      puts "Not in a git repo"
     else
-      #puts "in set"
-      unless !args.empty?
-        exit_now!("Wrong Number of Arguments - please provide pairing partners")
-      else
-        #puts "args not empty"
-        #add pair to conf
+      partners = args
+      while partners.empty?
+        input = ask "Please enter all pairing partners' initials: "
+        partners = GitPairs::Pairs.array_from_string(input)
+      end
+
+      unless partners.empty?
         authors = []
-        solo_author = ""
-        solo_email = ""
-        solo_initials = ""
-        size = args.uniq.size
-        args.uniq.each do |partner|
+        solo_author = solo_email = solo_initials = ""
+        size = partners.uniq.size
+        partners.uniq.each do |partner|
           unless GitPairs::Pairs.exists?(partner)
             GitPairs::Pairs.add(partner)
           end
-          #puts "in concat"
+
           if size > 1
             #concatenate each partner's username into git config "author"
             @author =  GitPairs::Pairs.fetch(partner)["username"]
@@ -32,6 +32,7 @@ command :set do |c|
             solo_initials = partner
           end
         end
+
         unless authors.empty?
           authors.sort!
           #puts"authors: #{authors}"

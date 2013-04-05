@@ -10,7 +10,7 @@ preserve_argv
 wrap_help_text :verbatim
 
 # config file is put into the user's home directory
-CFG_FILE = File.join(File.expand_path(ENV['HOME']),'.pairs')
+PAIR_CFG_FILE = File.join(File.expand_path(ENV['HOME']),'.pairs')
 
 pre do |global,command,options,args|
   # Pre logic here
@@ -19,24 +19,15 @@ pre do |global,command,options,args|
   # on that command only
 
   # Create config if it doesn't already exist
-  unless File.exists?(CFG_FILE)
-    name = `git config --global --get user.name`
-    initials = ""
-    name.strip.downcase.split(/ /).each { |n| initials << n.split(//)[0] }
-    email = `git config --get user.email`
-    username = email.split("@")[0]
-    default_conf = YAML::Store.new(CFG_FILE)
-    default_conf.transaction do
-      default_conf["pairs"] = {"#{initials}" => {'name'=>"#{name.strip}", 'username'=>"#{username}", 'email'=>"#{email.strip}"} }
-      default_conf["delimiters"] = {"name" => " / ", "initials" => " "}
-    end
+  unless File.exists?(PAIR_CFG_FILE)
+    GitPairs::Pairs.init
   end
 
   # Load .pairs config
-  if (File.exist?(CFG_FILE))
-    $pairs_conf = YAML::load(File.open(CFG_FILE, 'r'))
+  if (File.exist?(PAIR_CFG_FILE))
+    $pairs_conf = YAML::load(File.open(PAIR_CFG_FILE, 'r'))
   else
-    exit_now!("No ~/.pairs config file found")
+    exit_now! "No ~/.pairs config file found"
   end
 
   true
