@@ -9,8 +9,8 @@ command :add do |c|
       partners = args
     end
     partners.uniq.each do |partner|
-      unless GitPairs::Pairs.exists?(partner)
-        GitPairs::Pairs.add(partner)
+      unless GitPairs::Helper.exists?(partner)
+        GitPairs::Helper.add(partner)
       else
         puts "Pairing Partner '#{partner}' already exists"
         puts"To replace '#{partner}', first execute:  git pair rm #{partner}"

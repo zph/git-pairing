@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+require 'helper.rb'
+
+opts = Trollop::options do
+  banner <<-EOS
+Enables you to attribute git code commits to multiple authors
+
+Usage:
+    git whoami
+EOS
+end
+
+Trollop::die "Please ensure that git is installed before using 'git whoami'" unless system 'git --version > /dev/null 2>/dev/null'
+GitPairs::Helper.whoami

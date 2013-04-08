@@ -3,10 +3,10 @@ command :rm do |c|
   c.action do |global_options,options,args|
     unless args.empty?
       args.uniq.each do |partner|
-        unless GitPairs::Pairs.exists?(partner)
+        unless GitPairs::Helper.exists?(partner)
           puts"There is no pairing partner configured for: #{partner}"
         else
-          GitPairs::Pairs.delete(partner)
+          GitPairs::Helper.delete(partner)
         end
       end
     else

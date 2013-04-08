@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+require 'awesome_print'
+require 'helper.rb'
+
+opts = Trollop::options do
+  banner <<-EOS
+Attribute git code commits to a single author
+
+Usage:
+    git solo [<user-initials>]
+
+With no initials - removes user info from local git repo's config
+With initials - replaces local git repo config with info for that user
+EOS
+end
+
+# config file is put into the user's home directory
+initials  = ARGV
+pairs_conf = GitPairs::Helper.init(File.join(File.expand_path(ENV['HOME']),'.pairs'))
+
+Trollop::die "Not in a git repo" unless system 'git status > /dev/null 2>/dev/null'
+
+if initials.nil? || initials.empty?
+  # revert to global git config
+  `git config --unset-all user.name > /dev/null 2>/dev/null`
+  `git config --unset-all user.email > /dev/null 2>/dev/null`
+  `git config --unset-all user.initials > /dev/null 2>/dev/null`
+  `git config --remove-section user > /dev/null 2>/dev/null`
+else
+  # set local git config to single configured partner
+  author = GitPairs::Helper.fetch(pairs_conf, initials[0])
+  `git config user.name "#{author['name']}"`
+  `git config user.email "#{author['email']}"`
+  `git config user.initials "#{initials[0]}"`
+end
+
+GitPairs::Helper.whoami

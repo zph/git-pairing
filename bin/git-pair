@@ -1,51 +1,98 @@
 #!/usr/bin/env ruby
 
-require 'gli'
-require 'git-pair'
+require 'trollop'
+require 'yaml/store'
+require 'helper.rb'
 
-include GLI::App
-
-program_desc 'Keeps track of co-authors of git commits'
-preserve_argv
-wrap_help_text :verbatim
+require 'highline/import'
 
 # config file is put into the user's home directory
 PAIR_CFG_FILE = File.join(File.expand_path(ENV['HOME']),'.pairs')
 
-pre do |global,command,options,args|
-  # Pre logic here
-  # Return true to proceed; false to abort and not call the chosen command
-  # Use skips_pre before a command to skip this block
-  # on that command only
+pairs_conf = GitPairs::Helper.init(PAIR_CFG_FILE)
 
-  # Create config if it doesn't already exist
-  unless File.exists?(PAIR_CFG_FILE)
-    GitPairs::Pairs.init
-  end
+# Check if we are in a git repo
+unless system 'git status > /dev/null 2>/dev/null'
+ Trollop::die "Not in a git repo"
+end
 
-  # Load .pairs config
-  if (File.exist?(PAIR_CFG_FILE))
-    $pairs_conf = YAML::load(File.open(PAIR_CFG_FILE, 'r'))
+partners = ARGV
+
+while partners.empty?
+  input = ask "Please enter all pairing partners' initials: "
+  partners = GitPairs::Helper.array_from_string(input)
+end
+
+opts = Trollop::options do
+  banner <<-EOS
+Enables you to attribute git code commits to multiple authors
+
+Usage:
+    git pair [options] <user-initials-1> [<user-initials-2> ...]
+
+Options:
+EOS
+  opt :add, "Configures new pairing partners without modifying the existing git config", :type=>Array
+  opt :delete, "Delete pairing partners from the ~/.pairs config without modifying the existing git config", :type=>Array
+  opt :show, "Display the current ~/.pairs config"
+end
+
+case opts
+  when self.size > 1 then Trollop::die ""
+
+  when "add"
+  when "delete"
+  when self.inspect[:show]
+    GitPairs::Helper.whoami
+    puts "Pairs Config >"
+    ap pairs_conf
   else
-    exit_now! "No ~/.pairs config file found"
   end
 
-  true
+unless partners.empty?
+  authors = []
+  solo_author = solo_email = solo_initials = ""
+  size = partners.uniq.size
+  partners.uniq.each do |partner|
+    unless GitPairs::Helper.exists?(partner)
+      GitPairs::Helper.add(partner)
+    end
+
+    if size > 1
+      #concatenate each partner's username into git config "author"
+      @author =  GitPairs::Helper.fetch(partner)["username"]
+      authors << ["#{@author}","#{partner}"]
+    else # exactly one author provided
+      solo = GitPairs::Helper.fetch(partner)
+      solo_author =  solo["name"]
+      solo_email = solo["email"]
+      solo_initials = partner
+    end
+  end
+
+  unless authors.empty?
+    authors.sort!
+    #puts"authors: #{authors}"
+    sorted_authors = ""
+    sorted_initials = ""
+    authors.each do |a|
+      sorted_authors << a[0]
+      sorted_initials << a[1]
+      if size > 1 && authors.index(a) < size-1
+        sorted_authors << $pairs_conf['delimiters']['name']  #" / "
+        sorted_initials << $pairs_conf['delimiters']['initials']    #" "
+      end
+    end
+    #puts"sorted authors: #{sorted_authors}"
+    cmd_git = `git config user.name "#{sorted_authors}"`
+    cmd_git = `git config user.initials "#{sorted_initials}"`
+    #puts"cmdout: " + cmd_git
+  else
+    #puts"in else"
+    #puts"git config user.name #{solo_author}"
+    #puts"git config user.email #{solo_email}"
+    `git config user.name "#{solo_author}"`
+    `git config user.email "#{solo_email}"`
+    `git config user.initials "#{solo_initials}"`
+  end
 end
-
-post do |global,command,options,args|
-  # Post logic here
-  # Use skips_post before a command to skip this
-  # block on that command only
-end
-
-on_error do |exception|
-  # Error logic here
-  # return false to skip default error handling
-  true
-end
-
-# put command rb files into ./../lib/commands/
-commands_from './../lib/commands'
-
-exit run(ARGV)

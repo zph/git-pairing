@@ -9,7 +9,7 @@ command :set do |c|
       partners = args
       while partners.empty?
         input = ask "Please enter all pairing partners' initials: "
-        partners = GitPairs::Pairs.array_from_string(input)
+        partners = GitPairs::Helper.array_from_string(input)
       end
 
       unless partners.empty?
@@ -17,16 +17,16 @@ command :set do |c|
         solo_author = solo_email = solo_initials = ""
         size = partners.uniq.size
         partners.uniq.each do |partner|
-          unless GitPairs::Pairs.exists?(partner)
-            GitPairs::Pairs.add(partner)
+          unless GitPairs::Helper.exists?(partner)
+            GitPairs::Helper.add(partner)
           end
 
           if size > 1
             #concatenate each partner's username into git config "author"
-            @author =  GitPairs::Pairs.fetch(partner)["username"]
+            @author =  GitPairs::Helper.fetch(partner)["username"]
             authors << ["#{@author}","#{partner}"]
           else # exactly one author provided
-            solo = GitPairs::Pairs.fetch(partner)
+            solo = GitPairs::Helper.fetch(partner)
             solo_author =  solo["name"]
             solo_email = solo["email"]
             solo_initials = partner
