@@ -27,7 +27,7 @@ module GitPairs
 
     end
 
-    def self.set(conf, partners)
+    def self.set(conf, path_to_conf, partners)
       if partners.empty? || partners.size < 2
         puts ""
         Trollop::die "Please supply at least 2 sets of initials"
@@ -36,7 +36,7 @@ module GitPairs
       authors = []
       partners.uniq.each do |partner|
         unless GitPairs::Helper.exists?(conf, partner)
-          GitPairs::Helper.add(partner)
+          GitPairs::Helper.add(conf, path_to_conf, partner)
         end
         #concatenate each partner's info into delimited strings
         author =  GitPairs::Helper.fetch(conf, partner)

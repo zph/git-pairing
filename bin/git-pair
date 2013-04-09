@@ -49,7 +49,7 @@ elsif opts[:delete_given]
   puts "Pairs Config >"
   ap pairs_conf
 else
-  GitPairs::Commands.set(pairs_conf, ARGV.uniq)
+  GitPairs::Commands.set(pairs_conf, path_to_conf, ARGV.uniq)
   GitPairs::Helper.whoami
 end
 
