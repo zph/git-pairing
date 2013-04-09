@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   s.add_dependency('highline')
   s.add_dependency('win32console') if ($platform.to_s =~ /win32|mswin|mingw|cygwin/ || $platform.to_s == 'ruby')
   s.add_development_dependency('rake')
+  s.add_development_dependency('rdoc')
 end

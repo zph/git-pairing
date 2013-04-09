@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>git-pairing</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body>
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./Gemfile.html">Gemfile</a>
+  
+    <li class="file"><a href="./Gemfile_lock.html">Gemfile.lock</a>
+  
+    <li class="file"><a href="./README_md.html">README</a>
+  
+    <li class="file"><a href="./Rakefile.html">Rakefile</a>
+  
+    <li class="file"><a href="./doc/created_rid.html">created.rid</a>
+  
+    <li class="file"><a href="./git-pairing_gemspec.html">git-pairing.gemspec</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./GitPairs.html">GitPairs</a>
+  
+    <li><a href="./GitPairs/Commands.html">GitPairs::Commands</a>
+  
+    <li><a href="./GitPairs/Helper.html">GitPairs::Helper</a>
+  
+    <li><a href="./Trollop.html">Trollop</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+
+<h1 id="label-INTRO">INTRO<span><a href="#label-INTRO">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+
+<p>Share code authorship when pairing and using git/github.
+Works well with my
+fork of promptula to show which git pair is currently
+configured in a git
+repo.</p>
+
+<h1 id="label-GEM">GEM<span><a href="#label-GEM">&para;</a> <a href="#documentation">&uarr;</a></span></h1>
+
+<h2 id="label-Features">Features<span><a href="#label-Features">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p>adds news command to git, <code>git pair</code>, <code>git whoami</code>,
+and <code>git solo</code></p>
+</li><li>
+<p>changes the git config <code>[user] name</code> to list multiple commit
+authors</p>
+</li><li>
+<p>maintains a list of pairing partners</p>
+</li><li>
+<p>specify multiple commit authors by their initials</p>
+</li><li>
+<p>prompts to configure new partners as needed</p>
+</li><li>
+<p>remembers partners per repository</p>
+</li><li>
+<p>reverts back to original global settings</p>
+</li></ul>
+
+<p>See help for more details on the commands</p>
+
+<pre>$ git pair --help
+   $ git whoami --help
+   $ git solo --help</pre>
+
+<h2 id="label-Known+Issues">Known Issues<span><a href="#label-Known+Issues">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+<ul><li>
+<p>Does not currently work on Windows… Ubuntu and Mac OS X seem fine</p>
+</li><li>
+<p>May not play entirely nicely with github since they use the commiter’s
+name
+and email address to generate statistics and links</p>
+</li><li>
+<p>Will not play nice with <a href="https://github.com/chrisk/git-pair">Chris
+Kampmeier’s git-pair</a> gem since they use similar
+git command syntax
+(namely <code>git pair</code>)</p>
+</li></ul>
+
+<h2 id="label-Installing">Installing<span><a href="#label-Installing">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>To grab the latest stable release <code>gem install git-pairing</code></p>
+
+<p>Or, clone this repo and execute the following command in
+your
+terminal/console of choice</p>
+
+<pre>$ gem install git-pairing</pre>
+
+<h2 id="label-Building">Building<span><a href="#label-Building">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>The included <a href="Rakefile.html">Rakefile</a> will build the taz gem,
+e.g.,</p>
+
+<pre>$ rake</pre>
+
+<h2 id="label-Configuration">Configuration<span><a href="#label-Configuration">&para;</a> <a href="#documentation">&uarr;</a></span></h2>
+
+<p>The first time that <code>git pair</code> is executed, it will create a
+config file
+in the user's home directory <code>~/.pairs</code></p>
+
+<p>This is just a yaml file that you can edit manually or update via
+the
+available commands (e.g., <code>git pair --add sq</code>). Included in
+the config is
+the default delimiters used when setting the pair names and
+initials
+into the git config. Feel free to update these as well if the
+defaults
+do not suit your fancy.</p>
+</div>
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

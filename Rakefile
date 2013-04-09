@@ -11,10 +11,12 @@ task :build do
   system "gem update --system"
   system "gem update bundler"
   system "gem build git-pairing.gemspec"
+  system "rdoc --main README.md --title git-pairing"
 end
 
 task :clean do
   system "rm git-pairing-*.*.*.gem"
+  system "rm -rf doc"
 end
 
 spec = eval(File.read('git-pairing.gemspec'))
