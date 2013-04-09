@@ -43,6 +43,6 @@ elsif opts[:add_given]
 elsif opts[:delete_given]
   GitPairs::Commands.rm(pairs_conf, opts[:delete])
 else
-  GitPairs::Commands.set(pairs_conf, ARGV)
+  GitPairs::Commands.set(pairs_conf, ARGV.uniq)
 end
 

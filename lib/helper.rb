@@ -1,5 +1,6 @@
 require 'yaml/store'
 require 'awesome_print'
+require 'highline/import'
 
 module GitPairs
   class Helper

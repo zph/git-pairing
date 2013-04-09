@@ -15,8 +15,7 @@ module GitPairs
     def self.rm(conf, partners)
       if partners.empty?
         puts ""
-        puts "Please supply at least 1 set of initials"
-        raise Trollop::HelpNeeded
+        Trollop::die "Please supply at least 1 set of initials"
       end
       partners.uniq.each do |partner|
         unless GitPairs::Helper.exists?(partner)
@@ -31,12 +30,10 @@ module GitPairs
     def self.set(conf, partners)
       if partners.empty? || partners.size < 2
         puts ""
-        puts "Please supply at least 2 sets of initials"
-        raise Trollop::HelpNeeded
+        Trollop::die "Please supply at least 2 sets of initials"
       end
-      
+
       authors = []
-      size = partners.uniq.size
       partners.uniq.each do |partner|
         unless GitPairs::Helper.exists?(partner)
           GitPairs::Helper.add(partner)
@@ -45,7 +42,7 @@ module GitPairs
         @author =  GitPairs::Helper.fetch(conf, partner)["username"]
         authors << ["#{@author}","#{partner}"]
       end
-      
+
       GitPairs::Helper.set(conf, authors)
     end
   end

@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'trollop'
-require 'awesome_print'
 require 'helper.rb'
 
 opts = Trollop::options do
