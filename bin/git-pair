@@ -7,7 +7,8 @@ require 'commands.rb'
 require 'highline/import'
 
 # config file is put into the user's home directory
-pairs_conf = GitPairs::Helper.init(File.join(File.expand_path(ENV['HOME']),'.pairs'))
+path_to_conf = File.join(File.expand_path(ENV['HOME']),'.pairs')
+pairs_conf = GitPairs::Helper.init(path_to_conf)
 
 # Check if we are in a git repo
 Trollop::die "Not in a git repo" unless system 'git status > /dev/null 2>/dev/null'
@@ -39,10 +40,15 @@ if opts[:show_given]
   puts "Pairs Config >"
   ap pairs_conf
 elsif opts[:add_given]
-  GitPairs::Commands.add(pairs_conf, opts[:add])
+  GitPairs::Commands.add(pairs_conf, path_to_conf, opts[:add])
+  puts "Pairs Config >"
+  ap pairs_conf
 elsif opts[:delete_given]
   GitPairs::Commands.rm(pairs_conf, opts[:delete])
+  puts "Pairs Config >"
+  ap pairs_conf
 else
   GitPairs::Commands.set(pairs_conf, ARGV.uniq)
+  GitPairs::Helper.whoami
 end
 

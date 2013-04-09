@@ -1,9 +1,9 @@
 module GitPairs
   class Commands
-    def self.add(conf, partners)
+    def self.add(conf, path_to_conf, partners)
       partners.uniq.each do |partner|
         unless GitPairs::Helper.exists?(conf, partner)
-          GitPairs::Helper.add(conf, partner)
+          GitPairs::Helper.add(conf, path_to_conf, partner)
         else
           puts ""
           puts "Pairing Partner '#{partner}' already exists"

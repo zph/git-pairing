@@ -19,7 +19,7 @@ module GitPairs
         default_conf = YAML::Store.new(path_to_conf)
         default_conf.transaction do
           default_conf["pairs"] = {"#{initials}" => {'name'=>"#{name.strip}", 'username'=>"#{username}", 'email'=>"#{email.strip}"} }
-          default_conf["delimiters"] = {"name" => " / ", "initials" => " "}
+          default_conf["delimiters"] = {"name" => " / ", "initials" => " ", "email" => " / "}
         end
       end
       return YAML::load(File.open(path_to_conf))
@@ -47,11 +47,11 @@ module GitPairs
       return partners
     end
 
-    def self.add(conf, initials)
+    def self.add(conf, path_to_conf, initials)
       if self.exists?(conf, initials)
         puts "Pairing Partner '#{initials}' already exists"
       else
-        unless GitPairs::Helper.exists?(initials)
+        unless GitPairs::Helper.exists?(conf, initials)
           puts "Please provide info for: #{initials}"
           name = ask("Full Name: ")
           user = ask("Git Username: ")
@@ -60,7 +60,7 @@ module GitPairs
           email = ask("Email: ")
           partner = {initials => {'name' => name, 'username' => user, 'email' => email}}
           conf["pairs"].update(partner)
-          temp_conf = YAML::Store.new(CFG_FILE)
+          temp_conf = YAML::Store.new(path_to_conf)
           temp_conf.transaction do
             temp_conf["pairs"] = conf["pairs"]
           end
