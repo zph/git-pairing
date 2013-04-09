@@ -11,7 +11,7 @@ task :build do
   system "gem update --system"
   system "gem update bundler"
   system "gem build git-pairing.gemspec"
-  system "rdoc --main README.md --title git-pairing"
+  system "rdoc"
 end
 
 task :clean do
