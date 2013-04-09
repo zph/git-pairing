@@ -21,7 +21,7 @@ Usage:
     git pair <user-initials-1> <user-initials-2> [<user-initials-3> ...]
     git pair --add <user-initials-1> [<user-initials-2> ...]
     git pair --delete <user-initials-1> [<user-initials-2> ...]
-    git pair --showk
+    git pair --show
     git pair --help
 
 Options are mutually exclusive:
