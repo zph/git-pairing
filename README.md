@@ -26,6 +26,7 @@ See help for more details on the commands
 
 ## Known Issues
 
+* Does not currently work on Windows... Ubuntu and Mac OS X seem fine
 * May not play entirely nicely with github since they use the commiter's 
 name and email address to generate statistics and links 
 * Will not play nice with [Chris Kampmeier's git-pair](https://github.com/chrisk/git-pair) gem since they use similar
