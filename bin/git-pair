@@ -20,12 +20,13 @@ Enables you to attribute git code commits to multiple authors
 
 Usage:
     git pair <user-initials-1> <user-initials-2> [<user-initials-3> ...]
-    git pair --add <user-initials-1> [<user-initials-2> ...]
-    git pair --delete <user-initials-1> [<user-initials-2> ...]
-    git pair --show
-    git pair --help
+    git pair [-a | --add] <user-initials-1> [<user-initials-2> ...]
+    git pair [-d | --delete] <user-initials-1> [<user-initials-2> ...]
+    git pair [-s | --show]
+    git pair [-h | --help]
 
 Options are mutually exclusive:
+
 EOS
   opt :add, "Configures new pairing partners without modifying the existing git config", :type=>:strings
   opt :delete, "Delete pairing partners from the ~/.pairs config without modifying the existing git config", :type=>:strings

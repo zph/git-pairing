@@ -5,10 +5,12 @@ require 'helper.rb'
 
 opts = Trollop::options do
   banner <<-EOS
-Enables you to attribute git code commits to multiple authors
+
+Displays user info if it exists for the local git repo, otherwise displays global git config user info
 
 Usage:
     git whoami
+
 EOS
 end
 

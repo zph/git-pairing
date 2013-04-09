@@ -5,13 +5,15 @@ require 'helper.rb'
 
 opts = Trollop::options do
   banner <<-EOS
+
 Attribute git code commits to a single author
 
 Usage:
     git solo [<user-initials>]
 
-With no initials - removes user info from local git repo's config
+With no initials - removes user info from local git repo's config, global user config settings will be used
 With initials - replaces local git repo config with info for that user
+
 EOS
 end
 
