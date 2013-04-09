@@ -95,10 +95,10 @@ module GitPairs
       return conf["pairs"][initials]
     end
 
-    def self.delete(initials)
+    def self.delete(conf, path_to_conf, initials)
       if conf["pairs"].include?(initials)
         conf["pairs"].delete(initials)
-        temp_conf = YAML::Store.new(CFG_FILE)
+        temp_conf = YAML::Store.new(path_to_conf)
         temp_conf.transaction do
           temp_conf["pairs"] = conf["pairs"]
         end

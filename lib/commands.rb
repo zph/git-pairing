@@ -12,16 +12,16 @@ module GitPairs
       end
     end
 
-    def self.rm(conf, partners)
+    def self.rm(conf, path_to_conf, partners)
       if partners.empty?
         puts ""
         Trollop::die "Please supply at least 1 set of initials"
       end
       partners.uniq.each do |partner|
-        unless GitPairs::Helper.exists?(partner)
-          puts"There is no pairing partner configured for: #{partner}"
+        unless GitPairs::Helper.exists?(conf, partner)
+          puts "There is no pairing partner configured for: #{partner}"
         else
-          GitPairs::Helper.delete(partner)
+          GitPairs::Helper.delete(conf, path_to_conf, partner)
         end
       end
 
@@ -35,7 +35,7 @@ module GitPairs
 
       authors = []
       partners.uniq.each do |partner|
-        unless GitPairs::Helper.exists?(partner)
+        unless GitPairs::Helper.exists?(conf, partner)
           GitPairs::Helper.add(partner)
         end
         #concatenate each partner's info into delimited strings

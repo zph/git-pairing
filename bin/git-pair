@@ -44,7 +44,7 @@ elsif opts[:add_given]
   puts "Pairs Config >"
   ap pairs_conf
 elsif opts[:delete_given]
-  GitPairs::Commands.rm(pairs_conf, opts[:delete])
+  GitPairs::Commands.rm(pairs_conf, path_to_conf, opts[:delete])
   puts "Pairs Config >"
   ap pairs_conf
 else

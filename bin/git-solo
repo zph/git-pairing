@@ -27,12 +27,14 @@ if initials.nil? || initials.empty?
   `git config --unset-all user.email > /dev/null 2>/dev/null`
   `git config --unset-all user.initials > /dev/null 2>/dev/null`
   `git config --remove-section user > /dev/null 2>/dev/null`
-else
+elsif GitPairs::Helper.exists?(pairs_conf, initials[0])
   # set local git config to single configured partner
   author = GitPairs::Helper.fetch(pairs_conf, initials[0])
   `git config user.name "#{author['name']}"`
   `git config user.email "#{author['email']}"`
   `git config user.initials "#{initials[0]}"`
+else
+  puts "There is no pairing partner configured for: #{initials[0]}"
 end
 
 GitPairs::Helper.whoami
