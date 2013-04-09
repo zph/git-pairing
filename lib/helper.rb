@@ -76,7 +76,7 @@ module GitPairs
         sorted_authors << a[0]
         sorted_initials << a[1]
         sorted_emails << a[2]
-        if authors.index(a) < size-1
+        if authors.index(a) < authors.size-1
           sorted_authors << conf['delimiters']['name']
           sorted_initials << conf['delimiters']['initials']
           sorted_emails << conf['delimiters']['email']
