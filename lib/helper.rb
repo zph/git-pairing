@@ -25,7 +25,7 @@ module GitPairs
 
       # Update older confs with recently added settings
       tmp_conf = YAML::load(File.open(path_to_conf))
-      if tmp_conf["delimiters"]["email"].nil?
+      if tmp_conf["delimiters"].nil? || tmp_conf["delimiters"]["email"].nil?
         update_conf = YAML::Store.new(path_to_conf)
         update_conf.transaction do
           update_conf["delimiters"]["email"] = " , "
