@@ -22,6 +22,16 @@ module GitPairs
           default_conf["delimiters"] = {"name" => " / ", "initials" => " ", "email" => " , "}
         end
       end
+
+      # Update older confs with recently added settings
+      tmp_conf = YAML::load(File.open(path_to_conf))
+      if tmp_conf["delimiters"]["email"].nil?
+        update_conf = YAML::Store.new(path_to_conf)
+        update_conf.transaction do
+          update_conf["delimiters"]["email"] = " , "
+        end
+      end
+
       return YAML::load(File.open(path_to_conf))
     end
 
