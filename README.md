@@ -8,7 +8,7 @@ configured in a git repo.
 
 ## Features
 
-* adds news command to git, `git pair`, `git whoami`, and `git solo`
+* adds new command to git, `git pair`, `git whoami`, and `git solo`
 * changes the git config `[user] name` to list multiple commit authors
 * maintains a list of pairing partners
 * specify multiple commit authors by their initials
@@ -19,9 +19,9 @@ configured in a git repo.
 See help for more details on the commands
 
 ```
-   $ git pair --help
-   $ git whoami --help
-   $ git solo --help
+   $ git pair -h
+   $ git whoami -h
+   $ git solo -h
 ```
 
 ## Known Issues

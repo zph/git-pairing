@@ -23,7 +23,7 @@ Usage:
     git pair [-a | --add] <user-initials-1> [<user-initials-2> ...]
     git pair [-d | --delete] <user-initials-1> [<user-initials-2> ...]
     git pair [-s | --show]
-    git pair [-h | --help]
+    git pair -h
 
 Options are mutually exclusive:
 
