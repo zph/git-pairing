@@ -19,7 +19,7 @@ module GitPairs
         default_conf = YAML::Store.new(path_to_conf)
         default_conf.transaction do
           default_conf["pairs"] = {"#{initials}" => {'name'=>"#{name.strip}", 'username'=>"#{username}", 'email'=>"#{email.strip}"} }
-          default_conf["delimiters"] = {"name" => " / ", "initials" => " ", "email" => " / "}
+          default_conf["delimiters"] = {"name" => " / ", "initials" => " ", "email" => " , "}
         end
       end
       return YAML::load(File.open(path_to_conf))
@@ -33,18 +33,6 @@ module GitPairs
       puts "Name: #{user}"
       puts "Email: #{email}"
       puts " "
-    end
-
-    def self.array_from_string(s)
-      case s
-        when self.include?(" ") then partners = s.split(' ')
-        when self.include?(",") then partners = s.split(',')
-        when self.include?("|") then partners = s.split('|')
-        when self.include?(";") then partners = s.split(';')
-        when self.include?(":") then partners = s.split(':')
-        else partners << s
-      end
-      return partners
     end
 
     def self.add(conf, path_to_conf, initials)
