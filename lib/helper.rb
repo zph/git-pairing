@@ -47,12 +47,9 @@ module GitPairs
     end
 
     def self.add(conf, initials)
-      #if conf["pairs"].include?(initials)
       if self.exists?(conf, initials)
         puts "Pairing Partner '#{initials}' already exists"
       else
-        #puts "In Add"
-        #ap conf
         unless GitPairs::Helper.exists?(initials)
           puts "Please provide info for: #{initials}"
           name = ask("Full Name: ")
@@ -71,6 +68,26 @@ module GitPairs
       end
     end
 
+    def self.set(conf, authors)
+      authors.sort!
+      sorted_authors = ""
+      sorted_initials = ""
+      sorted_emails = ""
+      authors.each do |a|
+        sorted_authors << a[0]
+        sorted_initials << a[1]
+        sorted_emails << a[2]
+        if authors.index(a) < size-1
+          sorted_authors << conf['delimiters']['name']
+          sorted_initials << conf['delimiters']['initials']
+          sorted_emails << conf['delimiters']['email']
+        end
+        cmd_git = `git config user.name "#{sorted_authors}"`
+        cmd_git = `git config user.initials "#{sorted_initials}"`
+        cmd_git = `git config user.email "#{sorted_emails}"`
+      end
+    end
+
     def self.exists?(conf, initials)
       return conf["pairs"].include?(initials)
     end
@@ -80,9 +97,6 @@ module GitPairs
     end
 
     def self.delete(initials)
-      #puts "in delete"
-      #puts"before:"
-      #ap conf
       if conf["pairs"].include?(initials)
         conf["pairs"].delete(initials)
         temp_conf = YAML::Store.new(CFG_FILE)
@@ -90,8 +104,6 @@ module GitPairs
           temp_conf["pairs"] = conf["pairs"]
         end
       end
-      #puts"after:"
-      #ap conf
     end
   end
 end
