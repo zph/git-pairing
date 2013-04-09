@@ -25,11 +25,12 @@ module GitPairs
 
       # Update older confs with recently added settings
       tmp_conf = YAML::load(File.open(path_to_conf))
-      if tmp_conf["delimiters"].nil? || tmp_conf["delimiters"]["email"].nil?
-        update_conf = YAML::Store.new(path_to_conf)
-        update_conf.transaction do
-          update_conf["delimiters"]["email"] = " , "
-        end
+      update_conf = YAML::Store.new(path_to_conf)
+      update_conf.transaction do
+        update_conf["delimiters"] = tmp_conf["delimiters"] || {}
+        update_conf["delimiters"]["name"] = (tmp_conf["delimiters"] && tmp_conf["delimiters"]["name"]) || " / "
+        update_conf["delimiters"]["initials"] = (tmp_conf["delimiters"] && tmp_conf["delimiters"]["initials"]) || " "
+        update_conf["delimiters"]["email"] = (tmp_conf["delimiters"] && tmp_conf["delimiters"]["email"]) || " , "
       end
 
       return YAML::load(File.open(path_to_conf))
