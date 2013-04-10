@@ -9,7 +9,7 @@ module GitPairs
     def self.init(path_to_conf)
       # Create config if it doesn't already exist
       unless File.exists?(path_to_conf)
-        Trollop::die "Please ensure that git is installed before proceeding" unless system 'git --version > /dev/null 2>/dev/null'
+        Trollop::die "Please ensure that git is installed before proceeding" unless system 'git --version'
         puts Paint["initializing git-pairing for the first time...", :yellow]
         name = `git config --global --get user.name`
         initials = ""
