@@ -14,7 +14,7 @@ module GitPairs
       warning = "Please ensure that git is installed before proceeding"
       # Check if we are in a git repo
       if self.windows?
-        Trollop::die warning unless system 'git --version > NUL'
+        Trollop::die warning unless system 'git --version > NUL 2>NUL'
       else
         Trollop::die warning unless system 'git --version > /dev/null 2>/dev/null'
       end
@@ -24,7 +24,7 @@ module GitPairs
       warning = "Not in a git repo"
       # Check if we are in a git repo
       if self.windows?
-        Trollop::die warning unless system 'git status > NUL'
+        Trollop::die warning unless system 'git status > NUL 2>NUL'
       else
         Trollop::die warning unless system 'git status > /dev/null 2>/dev/null'
       end
@@ -32,10 +32,10 @@ module GitPairs
     
     def self.git_reset
       if self.windows?
-        `git config --unset-all user.name > NUL`
-        `git config --unset-all user.email > NUL`
-        `git config --unset-all user.initials > NUL`
-        `git config --remove-section user > NUL`
+        `git config --unset-all user.name > NUL 2>NUL`
+        `git config --unset-all user.email > NUL 2>NUL`
+        `git config --unset-all user.initials > NUL 2>NUL`
+        `git config --remove-section user > NUL 2>NUL`
       else
         `git config --unset-all user.name > /dev/null 2>/dev/null`
         `git config --unset-all user.email > /dev/null 2>/dev/null`
