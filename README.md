@@ -1,7 +1,7 @@
 # INTRO 
 
 Share code authorship when pairing and using git/github.
-Works well with my fork of promptula to show which git pair is currently
+Works well with [promptula](https://rubygems.org/gems/promptula) to show which git pair is currently
 configured in a git repo.
 
 # Features
