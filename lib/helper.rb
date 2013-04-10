@@ -1,5 +1,5 @@
 require 'yaml/store'
-require 'awesome_print'
+require 'paint'
 require 'highline/import'
 
 module GitPairs
@@ -10,7 +10,7 @@ module GitPairs
       # Create config if it doesn't already exist
       unless File.exists?(path_to_conf)
         Trollop::die "Please ensure that git is installed before proceeding" unless system 'git --version > /dev/null 2>/dev/null'
-        puts "Initializing Git Pairing:"
+        puts Paint["initializing git-pairing for the first time...", :yellow]
         name = `git config --global --get user.name`
         initials = ""
         name.strip.downcase.split(/ /).each { |n| initials << n.split(//)[0] }
@@ -39,32 +39,34 @@ module GitPairs
     def self.whoami
       user = `git config --get user.name`.strip
       email = `git config --get user.email`.strip
-      puts " "
-      puts "Git Config >"
-      puts "Name: #{user}"
-      puts "Email: #{email}"
-      puts " "
+      puts ""
+      puts "current git config >"
+      puts Paint["Name: #{user}", :yellow]
+      puts Paint["Email: #{email}", :yellow]
+      puts ""
     end
 
     def self.add(conf, path_to_conf, initials)
       if self.exists?(conf, initials)
-        puts "Pairing Partner '#{initials}' already exists"
+        puts ""
+        puts Paint["Pairing Partner '#{initials}' already exists", :red]
+        puts Paint["To replace '#{initials}', first execute:  git pair -d #{initials}", :yellow]
       else
-        unless GitPairs::Helper.exists?(conf, initials)
-          puts "Please provide info for: #{initials}"
-          name = ask("Full Name: ")
-          user = ask("Git Username: ")
-          #just in case they supply email address
-          user = user.split('@')[0]
-          email = ask("Email: ")
-          partner = {initials => {'name' => name, 'username' => user, 'email' => email}}
-          conf["pairs"].update(partner)
-          temp_conf = YAML::Store.new(path_to_conf)
-          temp_conf.transaction do
-            temp_conf["pairs"] = conf["pairs"]
-          end
-          puts "Added '#{initials}' to list of available pairs"
+        puts ""
+        puts Paint["Please provide info for: #{initials}", :yellow]
+        name = ask("Full Name: ")
+        user = ask("Git Username: ")
+        #just in case they supply email address
+        user = user.split('@')[0]
+        email = ask("Email: ")
+        partner = {initials => {'name' => name, 'username' => user, 'email' => email}}
+        conf["pairs"].update(partner)
+        temp_conf = YAML::Store.new(path_to_conf)
+        temp_conf.transaction do
+          temp_conf["pairs"] = conf["pairs"]
         end
+        puts ""
+        puts Paint["Added '#{initials}' to list of available pairs", :yellow]
       end
     end
 

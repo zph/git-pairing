@@ -5,6 +5,8 @@ require 'yaml/store'
 require 'helper.rb'
 require 'commands.rb'
 require 'highline/import'
+require 'paint'
+require 'pp'
 
 # config file is put into the user's home directory
 path_to_conf = File.join(File.expand_path(ENV['HOME']),'.pairs')
@@ -39,15 +41,21 @@ Trollop::die "Options are mutually exclusive - please enter only one" if too_man
 if opts[:show_given]
   GitPairs::Helper.whoami
   puts "Pairs Config >"
-  ap pairs_conf
+  puts ""
+  pp pairs_conf
+  puts ""
 elsif opts[:add_given]
   GitPairs::Commands.add(pairs_conf, path_to_conf, opts[:add])
   puts "Pairs Config >"
-  ap pairs_conf
+  puts ""
+  pp pairs_conf
+  puts ""
 elsif opts[:delete_given]
   GitPairs::Commands.rm(pairs_conf, path_to_conf, opts[:delete])
   puts "Pairs Config >"
-  ap pairs_conf
+  puts ""
+  pp pairs_conf
+  puts ""
 else
   GitPairs::Commands.set(pairs_conf, path_to_conf, ARGV.uniq)
   GitPairs::Helper.whoami

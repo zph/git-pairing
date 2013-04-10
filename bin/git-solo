@@ -2,6 +2,7 @@
 
 require 'trollop'
 require 'helper.rb'
+require 'paint'
 
 opts = Trollop::options do
   banner <<-EOS
@@ -36,7 +37,8 @@ elsif GitPairs::Helper.exists?(pairs_conf, initials[0])
   `git config user.email "#{author['email']}"`
   `git config user.initials "#{initials[0]}"`
 else
-  puts "There is no pairing partner configured for: #{initials[0]}"
+  puts ""
+  puts Paint["There is no pairing partner configured for: #{initials[0]}", :red]
 end
 
 GitPairs::Helper.whoami

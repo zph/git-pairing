@@ -1,38 +1,25 @@
+require 'paint'
+
 module GitPairs
   class Commands
     def self.add(conf, path_to_conf, partners)
       partners.uniq.each do |partner|
-        unless GitPairs::Helper.exists?(conf, partner)
-          GitPairs::Helper.add(conf, path_to_conf, partner)
-        else
-          puts ""
-          puts "Pairing Partner '#{partner}' already exists"
-          puts "To replace '#{partner}', first execute:  git pair rm #{partner}"
-        end
+        GitPairs::Helper.add(conf, path_to_conf, partner)
       end
     end
 
     def self.rm(conf, path_to_conf, partners)
-      if partners.empty?
-        puts ""
-        Trollop::die "Please supply at least 1 set of initials"
-      end
       partners.uniq.each do |partner|
-        unless GitPairs::Helper.exists?(conf, partner)
-          puts "There is no pairing partner configured for: #{partner}"
-        else
-          GitPairs::Helper.delete(conf, path_to_conf, partner)
-        end
+        GitPairs::Helper.delete(conf, path_to_conf, partner)
       end
-
     end
 
     def self.set(conf, path_to_conf, partners)
-      if partners.empty? || partners.size < 2
+      if partners.size < 2
         puts ""
-        Trollop::die "Please supply at least 2 sets of initials"
+        puts Paint["Please supply at least 2 sets of initials", :red]
+        Trollop::die "Wrong number of arguments"
       end
-
       authors = []
       partners.uniq.each do |partner|
         unless GitPairs::Helper.exists?(conf, partner)
@@ -44,7 +31,6 @@ module GitPairs
         email = author["email"]
         authors << ["#{name}","#{partner}", "#{email}"]
       end
-
       GitPairs::Helper.set(conf, authors)
     end
   end
