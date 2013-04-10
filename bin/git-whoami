@@ -14,5 +14,5 @@ Usage:
 EOS
 end
 
-Trollop::die "Please ensure that git is installed before using 'git whoami'" unless system 'git --version > /dev/null 2>/dev/null'
+GitPairs::Helper.git_installed?
 GitPairs::Helper.whoami

@@ -12,8 +12,7 @@ require 'pp'
 path_to_conf = File.join(File.expand_path(ENV['HOME']),'.pairs')
 pairs_conf = GitPairs::Helper.init(path_to_conf)
 
-# Check if we are in a git repo
-Trollop::die "Not in a git repo" unless system 'git status > /dev/null 2>/dev/null'
+GitPairs::Helper.git_repo?
 
 opts = Trollop::options do
   banner <<-EOS

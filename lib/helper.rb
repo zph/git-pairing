@@ -5,11 +5,48 @@ require 'highline/import'
 module GitPairs
   class Helper
     # Functions for manipulating the .pairs config file
+    def self.windows?
+      windows = (RUBY_PLATFORM.to_s =~ /win32|mswin|mingw|cygwin/ || RUBY_PLATFORM.to_s == 'ruby') ? return true : return false
+    end
+
+    def self.git_installed?
+      warning = "Please ensure that git is installed before proceeding"
+      # Check if we are in a git repo
+      if self.windows?
+        Trollop::die warning unless system 'git --version > NUL'
+      else
+        Trollop::die warning unless system 'git --version > /dev/null 2>/dev/null'
+      end
+    end
+
+    def self.git_repo?
+      warning = "Not in a git repo"
+      # Check if we are in a git repo
+      if self.windows?
+        Trollop::die warning unless system 'git status > NUL'
+      else
+        Trollop::die warning unless system 'git status > /dev/null 2>/dev/null'
+      end
+    end
+    
+    def self.git_reset
+      if self.windows?
+        `git config --unset-all user.name > NUL`
+        `git config --unset-all user.email > NUL`
+        `git config --unset-all user.initials > NUL`
+        `git config --remove-section user > NUL`
+      else
+        `git config --unset-all user.name > /dev/null 2>/dev/null`
+        `git config --unset-all user.email > /dev/null 2>/dev/null`
+        `git config --unset-all user.initials > /dev/null 2>/dev/null`
+        `git config --remove-section user > /dev/null 2>/dev/null`
+      end
+    end
 
     def self.init(path_to_conf)
       # Create config if it doesn't already exist
       unless File.exists?(path_to_conf)
-        Trollop::die "Please ensure that git is installed before proceeding" unless system 'git --version'
+        self.git_installed?
         puts Paint["initializing git-pairing for the first time...", :yellow]
         name = `git config --global --get user.name`
         initials = ""
