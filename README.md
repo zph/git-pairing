@@ -66,12 +66,8 @@ do not suit your fancy.
 
 # Known Issues
 
-* Does not currently work on Windows... Ubuntu and Mac OS X seem fine
-* May not play entirely nicely with github since they use the commiter's 
+* May make githubs graphs and stats inaccurate since it relies on the commiter's 
 name and email address to generate statistics and links 
-* Will not play nice with [Chris Kampmeier's
-git-pair](https://github.com/chrisk/git-pair) gem since it uses similar
-git command syntax (namely `git pair`) 
 
 # Building
 
