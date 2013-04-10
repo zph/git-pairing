@@ -6,7 +6,8 @@ module GitPairs
   class Helper
     # Functions for manipulating the .pairs config file
     def self.windows?
-      windows = (RUBY_PLATFORM.to_s =~ /win32|mswin|mingw|cygwin/ || RUBY_PLATFORM.to_s == 'ruby') ? return true : return false
+      windows = (RUBY_PLATFORM.to_s =~ /win32|mswin|mingw|cygwin/ || RUBY_PLATFORM.to_s == 'ruby') ? true : false
+      return windows
     end
 
     def self.git_installed?
