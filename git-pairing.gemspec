@@ -3,13 +3,14 @@ $platform ||= RUBY_PLATFORM
 
 Gem::Specification.new do |s|
   s.name = 'git-pairing'
-  s.version = "0.3.2"
+  s.version = "0.3.3"
   s.author = "Steve Quince"
   s.email = 'steve.quince@gmail.com'
   s.homepage = 'https://github.com/squince/git-pairing'
   s.platform = Gem::Platform::RUBY
   s.summary = ''
   s.description = 'Allows you to attribute code commits to multiple authors'
+  s.requirements << 'git must be installed'
 
   # Add other files here as they are created in the project
   s.files = Dir.glob("{bin,lib}/**/*")
