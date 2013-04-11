@@ -17,7 +17,7 @@ See help for more details and available options on the commands
 
 ```
    $ git pair -h
-   $ git whoami -h
+   $ git [ who | whoami ] -h
    $ git solo -h
 ```
 
