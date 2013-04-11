@@ -17,7 +17,7 @@ module GitPairs
     def self.set(conf, path_to_conf, partners)
       if partners.size < 2
         puts ""
-        puts Paint["Please supply at least 2 sets of initials", :red]
+        puts Paint["To configure pairing for this repo, supply a list of parnter initials.  E.g., 'git pair sq jo'", :yellow]
         Trollop::die "Wrong number of arguments"
       end
       authors = []

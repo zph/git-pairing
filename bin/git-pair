@@ -8,16 +8,14 @@ require 'highline/import'
 require 'paint'
 require 'pp'
 
-# config file is put into the user's home directory
-path_to_conf = File.join(File.expand_path(ENV['HOME']),'.pairs')
-pairs_conf = GitPairs::Helper.init(path_to_conf)
-
-GitPairs::Helper.git_repo?
-
 opts = Trollop::options do
   banner <<-EOS
 
 Enables you to attribute git code commits to multiple authors
+
+Also see:
+    git solo [-h | <user-initials>]
+    git [who | whoami]
 
 Usage:
     git pair <user-initials-1> <user-initials-2> [<user-initials-3> ...]
@@ -33,6 +31,11 @@ EOS
   opt :delete, "Delete pairing partners from the ~/.pairs config without modifying the existing git config", :type=>:strings
   opt :show, "Display the current ~/.pairs config"
 end
+
+# config file is put into the user's home directory
+path_to_conf = File.join(File.expand_path(ENV['HOME']),'.pairs')
+pairs_conf = GitPairs::Helper.init(path_to_conf)
+
 
 too_many = (opts[:show_given] && opts[:add_given]) || (opts[:show_given] && opts[:delete_given]) || (opts[:add_given] && opts[:delete_given])
 Trollop::die "Options are mutually exclusive - please enter only one" if too_many

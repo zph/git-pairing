@@ -21,6 +21,7 @@ module GitPairs
     end
 
     def self.git_repo?
+      self.git_installed?
       warning = "Not in a git repo"
       # Check if we are in a git repo
       if self.windows?
@@ -29,8 +30,9 @@ module GitPairs
         Trollop::die warning unless system 'git status > /dev/null 2>/dev/null'
       end
     end
-    
+
     def self.git_reset
+      self.git_installed?
       if self.windows?
         `git config --unset-all user.name > NUL 2>NUL`
         `git config --unset-all user.email > NUL 2>NUL`
@@ -75,6 +77,7 @@ module GitPairs
     end
 
     def self.whoami
+      self.git_installed?
       user = `git config --get user.name`.strip
       email = `git config --get user.email`.strip
       puts ""
@@ -109,6 +112,7 @@ module GitPairs
     end
 
     def self.set(conf, authors)
+      self.git_repo?
       authors.sort!
       sorted_authors = ""
       sorted_initials = ""
