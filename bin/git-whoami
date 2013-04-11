@@ -9,7 +9,7 @@ opts = Trollop::options do
 Displays user info if it exists for the local git repo, otherwise displays global git config user info
 
 Usage:
-    git whoami
+    git [ whoami | who ]
 
 EOS
 end
