@@ -11,7 +11,7 @@ configured in a git repo.
 * maintains a list of pairing partners, so that you can specify multiple commit authors by their initials
 * prompts to configure new partners as needed
 * reverts back to original global settings
-* compliments [promptula](http://github.com/wballard/promptula)
+* complements [promptula](http://github.com/wballard/promptula)
 
 See help for more details and available options on the commands
 
