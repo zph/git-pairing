@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version = "0.3.5"
   s.author = "Steve Quince"
   s.email = 'steve.quince@gmail.com'
-  s.homepage = 'https://github.com/squince/git-pairing'
+  s.homepage = 'https://github.com/glg/git-pairing'
   s.platform = Gem::Platform::RUBY
   s.summary = ''
   s.description = 'Allows you to attribute code commits to multiple authors'
