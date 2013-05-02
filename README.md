@@ -49,7 +49,7 @@ the end.  To do that, I simply replaced the export command created by
 promptula in the .bash_profile/.bashrc with
 
 ```
-    export PS1="\$(pwd) \$(promoptula) "
+    export PS1="\$(pwd) \$(promptula) "
 ```
 
 ### Configuration
