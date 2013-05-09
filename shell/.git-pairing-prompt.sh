@@ -7,12 +7,12 @@
 
 __git_pairing_prompt ()
 {
-  local color_clear = "\[\e[m\]"
-  local color_red = "\[\e[0;32m\]"
-  local color_green = "\[\e[0;34m\]"
-  local untracked = "\[\u2733\]"
-  local pull_arrow = "\[\u2798\]"
-  local push_arrow = "\[\u279A\]"
+  local c_clear="\[\e[m\]"
+  local c_red="\[\e[0;32m\]"
+  local c_green="\[\e[0;34m\]"
+  local untracked="\[\u2733\]"
+  local pull_arrow="\[\u2798\]"
+  local push_arrow="\[\u279A\]"
 
   local d="$(pwd  2>/dev/null)"; # d = current working directory
   local b="$(git symbolic-ref HEAD 2>/dev/null)"; # b = branch
@@ -33,15 +33,17 @@ __git_pairing_prompt ()
 		  ">"*) ((push_count++))  ;;
 		  esac
 	  done
+  fi
+
 
   # COMPONENTS OF PROMPT
   local prompt=""       # the prompt's final form
-  local d_prompt=""     # directory portion
   local b_prompt=""     # branch portion
   local p_prompt=""     # pairing partner initials
   local ahead_r=""      # ahead of remote
   local behind_r=""     # behind remote
   local u_prompt=""     # untracked files
+  local d_prompt="$d"     # directory portion
 
   if [ -n "$b" ]; then
     b_prompt=" [${b##refs/heads/}]"
@@ -49,10 +51,10 @@ __git_pairing_prompt ()
   if [ -n "$p" ]; then
     p_prompt="${p}"
   fi
-  if [ $push_count > 0  ]; then
+  if [ "$push_count" -gt 0  ]; then
     ahead_r=""
   fi
-  if [ $pull_count > 0  ]; then
+  if [ "$pull_count" -gt 0  ]; then
     behind_r=""
   fi
 
