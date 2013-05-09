@@ -8,7 +8,7 @@ __git_pairing_prompt ()
   local c_green="\[\e[0;34m\]"
   local untracked="\[\u2733\]"
   local pull_arrow="\x25BE" #"\xE2\x96\xB4"
-  local push_arrow="\x25B4" #\xE2\x96\xBE"
+  local push_arrow="\342\230\240" #\x25B4" #\xE2\x96\xBE"
 
   local d="$(pwd  2>/dev/null)"; # d = current working directory
   local tb="$(git symbolic-ref HEAD 2>/dev/null)";
