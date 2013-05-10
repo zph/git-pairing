@@ -54,14 +54,23 @@ __git_pairing_prompt ()
     b_prompt=" [${b}${ahead_r}${behind_r}${u_prompt}]"
   fi
   if [ -n "$s" ]; then
-    printf "%s$(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+    #printf "%s$(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+    export PS1=${d_prompt}$(c_red "${b_prompt}")$(c_yellow "${p_prompt}")$(c_clear)
   else
-    printf "%s$(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+    #printf "%s$(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+    export PS1=${d_prompt}$(c_green "${b_prompt}")$(c_yellow "${p_prompt}")$(c_clear)
   fi
 
 }
 
-c_clear () { printf '\e[m'"$*"; }
-c_green () { printf '\e[0;32m'"$*"'\e[m'; }
-c_yellow () { printf '\e[0;33m'"$*"'\e[m'; }
-c_red () { printf '\e[0;31m'"$*"'\e[m'; }
+c_clear () { printf '\[\e[m\]'"$* "; }
+c_green () { printf '\[\e[0;32m\]'"$*"'\[\e[m\]'; }
+c_yellow () { printf '\[\e[0;33m\]'"$*"'\[\e[m\]'; }
+c_red () { printf '\[\e[0;31m\]'"$*"'\[\e[m\]'; }
+
+#c_clear () { printf '\e[m'"$*"; }
+#c_green () { printf '\e[0;32m'"$*"'\e[m'; }
+#c_yellow () { printf '\e[0;33m'"$*"'\e[m'; }
+#c_red () { printf '\e[0;31m'"$*"'\e[m'; }
+
+__git_pairing_prompt
