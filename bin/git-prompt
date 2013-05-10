@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require 'trollop'
+require 'helper.rb'
+
+opts = Trollop::options do
+  banner <<-EOS
+
+Displays user info if it exists for the local git repo, otherwise displays global git config user info
+
+Usage:
+    git [ whoami | who ]
+
+EOS
+end
+
+GitPairs::Helper.git_installed?
+GitPairs::Helper.whoami
