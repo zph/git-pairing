@@ -54,11 +54,9 @@ __git_pairing_prompt ()
     b_prompt=" [${b}${ahead_r}${behind_r}${u_prompt}]"
   fi
   if [ -n "$s" ]; then
-    #printf "%s$(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
-    printf "$(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${b_prompt}" "${p_prompt}"
+    printf "%s$(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
   else
-    #printf "%s$(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
-    printf "$(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${b_prompt}" "${p_prompt}"
+    printf "%s$(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
   fi
 
 }
