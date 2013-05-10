@@ -57,12 +57,12 @@ __git_pairing_prompt ()
     #echo -e "$d_prompt$c_red$b_prompt$c_yellow$p_prompt$c_clear"
     #printf "$d_prompt$c_red$b_prompt$c_yellow$p_prompt$c_clear"
     #printf "%s$c_red%s$c_yellow%s$c_clear" "${d_prompt}" "${b_prompt}" "${p_prompt}"
-    printf "%s$(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+    printf "%s$(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"  # WORKS BEST
     #export PS1=${d_prompt}$(c_red "${b_prompt}")$(c_yellow "${p_prompt}")$(c_clear)
   else
     #echo -ne "$d_prompt$c_green$b_prompt$c_yellow$p_prompt$c_clear"
     #printf "%s$c_green("%%s")$c_yellow("%%s")$c_clear()" "${d_prompt}" "${b_prompt}" "${p_prompt}"
-    printf "%s$(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+    printf "%s$(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"  # WORKS BEST
     #export PS1=${d_prompt}$(c_green "${b_prompt}")$(c_yellow "${p_prompt}")$(c_clear)
   fi
 
