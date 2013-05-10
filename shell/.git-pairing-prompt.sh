@@ -3,12 +3,13 @@
 
 __git_pairing_prompt ()
 {
-  local c_clear="\[\e[m\]"
-  local c_red="\[\e[0;32m\]"
-  local c_green="\[\e[0;34m\]"
-  local untracked="\[\u2733\]"
-  local pull_arrow="\x25BE" #"\xE2\x96\xB4"
-  local push_arrow="\342\230\240" #\x25B4" #\xE2\x96\xBE"
+  local c_clear='\033[0m\]'
+  local c_red='\033[0;31m'
+  local c_green='\033[0;32m'
+  local c_blue='\033[1;34m'
+  local untracked="✶"
+  local pull_arrow="▼ "  #"▾"
+  local push_arrow="▲ "  #"▴"
 
   local d="$(pwd  2>/dev/null)"; # d = current working directory
   local tb="$(git symbolic-ref HEAD 2>/dev/null)";
@@ -20,8 +21,9 @@ __git_pairing_prompt ()
   local push_count=0
   local pull_count=0
 
-  if [ -n "$push_pull" ]
-  then
+  #printf '\033[1;34m'"yellow text on blue background";
+
+  if [ -n "$push_pull" ]; then
 	  local commit
 	  for commit in "$push_pull"
 	  do
@@ -32,17 +34,14 @@ __git_pairing_prompt ()
 	  done
   fi
 
-  echo push: $push_count
-  echo pull: $pull_count
-
   # COMPONENTS OF PROMPT
-  local prompt=""       # the prompt's final form
-  local b_prompt=""     # branch portion
-  local p_prompt=""     # pairing partner initials
-  local ahead_r=""      # ahead of remote
-  local behind_r=""     # behind remote
-  local u_prompt=""     # untracked files
-  local d_prompt="$d"     # directory portion
+  local prompt=""           # the prompt's final form
+  local b_prompt=""         # branch portion
+  local p_prompt=""         # pairing partner initials
+  local ahead_r=""          # ahead of remote
+  local behind_r=""         # behind remote
+  local u_prompt=""         # untracked files
+  local d_prompt="$d"       # directory portion
 
   if [ -n "$p" ]; then
     p_prompt="${p}"
@@ -56,12 +55,10 @@ __git_pairing_prompt ()
   if [ -n "$b" ]; then
     b_prompt=" [${b}${ahead_r}${behind_r}]"
   fi
+  if [ -n "$s" ]; then
+    printf "%s\033[0;31m%s\033[0;33m%s\033[0m" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+  else
+    printf "%s\033[0;32m%s\033[0;33m%s\033[0m" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+  fi
 
-  prompt+="${d_prompt}"
-  prompt+="${b_prompt}"
-  prompt+="${p_prompt}"
-  prompt+=" "
-
-  # PRINT THE PROMPT ALREADY
-  printf "%s" "${prompt}"
 }
