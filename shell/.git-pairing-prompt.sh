@@ -31,7 +31,6 @@ __git_pairing_prompt ()
   fi
 
   # COMPONENTS OF PROMPT
-  local prompt=""           # the prompt's final form
   local b_prompt=""         # branch portion
   local p_prompt=""         # pairing partner initials
   local ahead_r=""          # ahead of remote
@@ -55,9 +54,14 @@ __git_pairing_prompt ()
     b_prompt=" [${b}${ahead_r}${behind_r}${u_prompt}]"
   fi
   if [ -n "$s" ]; then
-    printf "%s\033[0;31m%s\033[0;33m%s\033[0m" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+    printf "%s$(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
   else
-    printf "%s\033[0;32m%s\033[0;33m%s\033[0m" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+    printf "%s$(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
   fi
 
 }
+
+c_clear () { printf '\e[m'"$*"; }
+c_green () { printf '\e[0;32m'"$*"'\e[m'; }
+c_yellow () { printf '\e[0;33m'"$*"'\e[m'; }
+c_red () { printf '\e[0;31m'"$*"'\e[m'; }
