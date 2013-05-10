@@ -3,10 +3,6 @@
 
 __git_pairing_prompt ()
 {
-  local c_clear='\033[0m\]'
-  local c_red='\033[0;31m'
-  local c_green='\033[0;32m'
-  local c_blue='\033[1;34m'
   local untracked="✶"
   local pull_arrow="▼ "  #"▾"
   local push_arrow="▲ "  #"▴"
@@ -43,6 +39,9 @@ __git_pairing_prompt ()
   local u_prompt=""         # untracked files
   local d_prompt="$d"       # directory portion
 
+  if [[ "$s" == *\?\?* ]]; then
+    u_prompt=" ${untracked}"
+  fi
   if [ -n "$p" ]; then
     p_prompt="${p}"
   fi
@@ -53,7 +52,7 @@ __git_pairing_prompt ()
     behind_r=" ${pull_arrow}${pull_count}"
   fi
   if [ -n "$b" ]; then
-    b_prompt=" [${b}${ahead_r}${behind_r}]"
+    b_prompt=" [${b}${ahead_r}${behind_r}${u_prompt}]"
   fi
   if [ -n "$s" ]; then
     printf "%s\033[0;31m%s\033[0;33m%s\033[0m" "${d_prompt}" "${b_prompt}" "${p_prompt}"
