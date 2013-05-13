@@ -132,6 +132,9 @@ jam
         puts ""
         puts Paint["Please re-source your bash_profile or bashrc", :yellow]
         puts Paint["(i.e., source ~/.bash_profile", :yellow]
+        puts ""
+        puts Paint["Feel free to edit ~/.git-pairing-prompt.sh to suit your prompt preferences", :yellow]
+        puts ""
       end
     end
 
