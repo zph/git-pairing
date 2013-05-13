@@ -21,6 +21,7 @@ Usage:
     git pair <user-initials-1> <user-initials-2> [<user-initials-3> ...]
     git pair [-a | --add] <user-initials-1> [<user-initials-2> ...]
     git pair [-d | --delete] <user-initials-1> [<user-initials-2> ...]
+    git pair [-p | --prompt]
     git pair [-s | --show]
     git pair -h
 
@@ -29,6 +30,7 @@ Options are mutually exclusive:
 EOS
   opt :add, "Configures new pairing partners without modifying the existing git config", :type=>:strings
   opt :delete, "Delete pairing partners from the ~/.pairs config without modifying the existing git config", :type=>:strings
+  opt :prompt, "Override the PS1 to display a useful git-centric bash prompt"
   opt :show, "Display the current ~/.pairs config"
 end
 
@@ -37,7 +39,12 @@ path_to_conf = File.join(File.expand_path(ENV['HOME']),'.pairs')
 pairs_conf = GitPairs::Helper.init(path_to_conf)
 
 
-too_many = (opts[:show_given] && opts[:add_given]) || (opts[:show_given] && opts[:delete_given]) || (opts[:add_given] && opts[:delete_given])
+too_many = opts[:show_given] && opts[:add_given]
+too_many = too_many || opts[:delete_given] && opts[:show_given]
+too_many = too_many || opts[:add_given] && opts[:delete_given]
+too_many = too_many || opts[:show_given] && opts[:prompt_given]
+too_many = too_many || opts[:delete_given] && opts[:prompt_given]
+too_many = too_many || opts[:add_given] && opts[:prompt_given]
 Trollop::die "Options are mutually exclusive - please enter only one" if too_many
 
 if opts[:show_given]
@@ -58,6 +65,8 @@ elsif opts[:delete_given]
   puts ""
   pp pairs_conf
   puts ""
+elsif opts[:prompt_given]
+  GitPairs::Helper.pair
 else
   GitPairs::Commands.set(pairs_conf, path_to_conf, ARGV.uniq)
   GitPairs::Helper.whoami

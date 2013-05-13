@@ -111,6 +111,30 @@ module GitPairs
       end
     end
 
+    def self.pair
+      self.git_installed?
+      install_with = <<jam
+source ~/.git-pairing-prompt.sh
+export PS1="\\[\\$(__git_pairing_prompt)\\] "
+jam
+      confirmed = agree("Configure git-pairing bash prompt? ")
+      if confirmed
+        # copy shell script to user's home dir
+        `cd ~/; curl -O https://raw.github.com/glg/git-pairing/prompt/shell/.git-pairing-prompt.sh`
+        # configure prompt
+        [ENV['HOME'].to_s + "/.bash_profile", ENV['HOME'].to_s + "/.bashrc"].each do |profile|
+          if File.exists? profile
+            open(profile, 'a') do |f|
+              f.puts install_with
+            end
+          end
+        end
+        puts ""
+        puts Paint["Please re-source your bash_profile or bashrc", :yellow]
+        puts Paint["(i.e., source ~/.bash_profile", :yellow]
+      end
+    end
+
     def self.set(conf, authors)
       self.git_repo?
       authors.sort!

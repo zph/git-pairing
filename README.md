@@ -1,17 +1,17 @@
 # INTRO 
 
-Share code authorship when pairing and using git/github.
-Works well with [promptula](https://rubygems.org/gems/promptula) to show which git pair is currently
-configured in a git repo.
+Share code authorship when pairing and using git/github.  Display a
+customized bash prompt to show branch, pairing authors, and colorized
+git status.
 
 # Features
 
 * adds new commands to git, `git pair`, `git whoami`, and `git solo`
 * changes the git config `[user] name` to list multiple commit authors, and remembers partners per repository
 * maintains a list of pairing partners, so that you can specify multiple commit authors by their initials
-* prompts to configure new partners as needed
-* reverts back to original global settings
-* complements [promptula](http://github.com/wballard/promptula)
+* prompts the user to configure new partners as needed
+* reverts back to original global settings with `git solo` if no user is provided
+* can display a bash prompt with useful git information
 
 See help for more details and available options on the commands
 
@@ -34,24 +34,6 @@ terminal/console of choice
 
 # Customizing
 
-### Tweaking Promptula Command Prompt
-
-When promptula is installed along side git-pairing, it will display the
-pairing partners configured in a repo on the command line.  Installing
-promptula `promptula --install` adds a line to your
-.bash_profile/.bashrc `export PROMPT_COMMAND='echo -ne $(promptula)'`.
-This allows users to keep whatever prompt they have already in place,
-but augments it with additional info when you are in a git repo.  By
-default, the promptula info is at the beginning of your prompt.
-
-I prefer to have the path to my cwd in my prompt with promptula info at
-the end.  To do that, I simply replaced the export command created by
-promptula in the .bash_profile/.bashrc with
-
-```
-    export PS1="\$(pwd) \$(promptula) "
-```
-
 ### Configuration
 
 The first time that `git pair` is executed, it will create a config file
@@ -63,6 +45,22 @@ the default delimiters used when setting the pair names, email
 addresses, and partner initials
 into the git config.  Feel free to update these as well if the defaults
 do not suit your fancy.
+
+### Git-Pairing Command Prompt
+
+git-pairing can display the pairing partners configured for a project on the
+command line along with other useful information when in a git repo.
+
+Executing `git pair --prompt` adds this feature.
+* shell script is copied to your home directory
+* adds a line to your .bash_profile/.bashrc to source a shell script and
+set your PS1 to the __git_pairing_prompt() function
+  * `source ~/.git-pairing-prompt.sh` 
+  * `export PS1="\[$(__git_pairing_prompt)\] "`
+* shell script and bash_profile have default behavior that can easily be
+customized by simply editing these default entries
+
+This allows users to keep track of important info when you are in a git repo.
 
 # Known Issues
 
