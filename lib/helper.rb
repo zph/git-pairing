@@ -120,9 +120,10 @@ jam
       confirmed = agree("Configure git-pairing bash prompt? ")
       if confirmed
         # copy shell script to user's home dir
-        `cd ~/; curl -O https://raw.github.com/glg/git-pairing/prompt/shell/.git-pairing-prompt.sh`
+        home = File.expand_path('~')
+        `cd #{home}; curl -O https://raw.github.com/glg/git-pairing/prompt/shell/.git-pairing-prompt.sh`
         # configure prompt
-        [ File.expand_path('~') + "/.bash_profile", File.expand_path('~') + "/.bashrc" ].each do |profile|
+        [ "#{home}/.bash_profile", "#{home}/.bashrc" ].each do |profile|
           if File.exists? profile
             open(profile, 'a') do |f|
               f.puts install_with
