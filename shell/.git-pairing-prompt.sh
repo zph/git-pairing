@@ -42,7 +42,7 @@ __git_pairing_prompt ()
     u_prompt=" ${untracked}"
   fi
   if [ -n "$p" ]; then
-    p_prompt="${p}"
+    p_prompt="[${p}]"
   fi
   if [ "$push_count" -gt 0  ]; then
     ahead_r=" ${push_arrow}${push_count}"
@@ -54,15 +54,16 @@ __git_pairing_prompt ()
     b_prompt="[${b}${ahead_r}${behind_r}${u_prompt}]"
   fi
   if [ -n "$s" ]; then
-    printf "%s $(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"  # WORKS BEST
+    printf "%s $(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
   else
-    printf "%s $(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"  # WORKS BEST
+    printf "%s $(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
   fi
 
 }
 
 # Color codes to use:
 # http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
+# Likewise, you could always alter your terminal preferences color scheme
 
 # color text on normal background, do not escape color codes here
 # escape around whole prompt in PS1
