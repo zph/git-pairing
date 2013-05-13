@@ -51,38 +51,49 @@ __git_pairing_prompt ()
     behind_r=" ${pull_arrow}${pull_count}"
   fi
   if [ -n "$b" ]; then
-    b_prompt=" [${b}${ahead_r}${behind_r}${u_prompt}]"
+    b_prompt="[${b}${ahead_r}${behind_r}${u_prompt}]"
   fi
   if [ -n "$s" ]; then
+    printf "%s $(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"  # WORKS BEST
     #echo -e "$d_prompt$c_red$b_prompt$c_yellow$p_prompt$c_clear"
     #printf "$d_prompt$c_red$b_prompt$c_yellow$p_prompt$c_clear"
     #printf "%s$c_red%s$c_yellow%s$c_clear" "${d_prompt}" "${b_prompt}" "${p_prompt}"
-    printf "%s$(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"  # WORKS BEST
     #export PS1=${d_prompt}$(c_red "${b_prompt}")$(c_yellow "${p_prompt}")$(c_clear)
   else
+    printf "%s $(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"  # WORKS BEST
     #echo -ne "$d_prompt$c_green$b_prompt$c_yellow$p_prompt$c_clear"
     #printf "%s$c_green("%%s")$c_yellow("%%s")$c_clear()" "${d_prompt}" "${b_prompt}" "${p_prompt}"
-    printf "%s$(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"  # WORKS BEST
     #export PS1=${d_prompt}$(c_green "${b_prompt}")$(c_yellow "${p_prompt}")$(c_clear)
   fi
 
 }
 
+# color text on normal background, do not escape color codes here
+# escape around whole prompt in PS1
+# e.g., export PS1="\[\$(__git_pairing_prompt)\] "
 c_clear () { printf '\e[m'"$*"; }
 c_green () { printf '\e[0;32m'"$*"'\e[m'; }
 c_yellow () { printf '\e[0;33m'"$*"'\e[m'; }
 c_red () { printf '\e[0;31m'"$*"'\e[m'; }
 
+# white text on color background
+#c_clear () { printf '\e[m'"$*"; }
+#c_green () { printf '\e[42;1;37m'"$*"'\e[m'; }
+#c_yellow () { printf '\e[43;1;37m'"$*"'\e[m'; }
+#c_red () { printf '\e[41;1;37m'"$*"'\e[m'; }
 
-#c_clear () { printf "\[\e[m\]$* "; }
-#c_green () { printf "\[\e[0;32m\]$*\[\e[m\]"; }
-#c_yellow () { printf "\[\e[0;33m\]$*\[\e[m\]"; }
-#c_red () { printf "\[\e[0;31m\]""$*""\[\e[m\]"; }
-
+# wrap color codes with escape sequence here rather than PS1 in bash_profile
+# e.g., export PS1='\$(__git_pairing_prompt)'
 #c_clear () { printf '\[\e[m\]'"$* "; }
 #c_green () { printf '\[\e[0;32m\]'"$*"'\[\e[m\]'; }
 #c_yellow () { printf '\[\e[0;33m\]'"$*"'\[\e[m\]'; }
 #c_red () { printf '\[\e[0;31m\]'"$*"'\[\e[m\]'; }
 
-#export PS1="\$(__git_pairing_prompt) "
+# try defining color functions with only one set of double quotes
+# e.g., export PS1='\$(__git_pairing_prompt)'
+#c_clear () { printf "\[\e[m\]$* "; }
+#c_green () { printf "\[\e[0;32m\]$*\[\e[m\]"; }
+#c_yellow () { printf "\[\e[0;33m\]$*\[\e[m\]"; }
+#c_red () { printf "\[\e[0;31m\]""$*""\[\e[m\]"; }
+
 #__git_pairing_prompt
