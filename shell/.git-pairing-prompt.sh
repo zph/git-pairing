@@ -34,7 +34,7 @@ __git_pairing_prompt ()
 
   if [ -n "$push_pull" ]; then
 	  local commit
-	  for commit in "$push_pull"
+	  for commit in $push_pull
 	  do
 		  case "$commit" in
 		  "<"*) ((pull_count++)) ;;
