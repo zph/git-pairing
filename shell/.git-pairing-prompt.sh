@@ -3,9 +3,26 @@
 
 __git_pairing_prompt ()
 {
-  local untracked="✶"
-  local pull_arrow="▼ "  #"▾"
-  local push_arrow="▲ "  #"▴"
+  local os=`uname 2>/dev/null`
+  case "$os" in
+  "MINGW"*)
+    echo "windows"
+    local untracked="*"
+    local pull_arrow="v"
+    local push_arrow="^"
+    ;;
+  "Darwin"*)
+    local untracked="✶"
+    local pull_arrow="▼ "  #"▾"
+    local push_arrow="▲ "  #"▴"
+    ;;
+  "debian"*|"ubuntu"*|"redhat"*|"centos"*|"freebsd"*)
+    echo "linux"
+    local untracked="✶"
+    local pull_arrow="▼ "  #"▾"
+    local push_arrow="▲ "  #"▴"
+    ;;
+  esac
 
   local d="$(pwd  2>/dev/null)"; # d = current working directory
   local tb="$(git symbolic-ref HEAD 2>/dev/null)";
@@ -16,8 +33,6 @@ __git_pairing_prompt ()
   local push_pull="$(git rev-list --left-right $r...HEAD 2>/dev/null)"; # push_pull = list of revisions
   local push_count=0
   local pull_count=0
-
-  #printf '\033[1;34m'"yellow text on blue background";
 
   if [ -n "$push_pull" ]; then
 	  local commit
