@@ -121,7 +121,7 @@ jam
       if confirmed
         # copy shell script to user's home dir
         home = File.expand_path('~')
-        `cd #{home}; curl -O https://raw.github.com/glg/git-pairing/master/shell/.git-pairing-prompt.sh`
+        `curl -o #{home}/.git-pairing-prompt.sh https://raw.github.com/glg/git-pairing/master/shell/.git-pairing-prompt.sh`
         # configure prompt
         [ "#{home}/.bash_profile", "#{home}/.bashrc" ].each do |profile|
           if File.exists? profile
