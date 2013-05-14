@@ -65,7 +65,8 @@ This allows users to keep track of important info when you are in a git repo.
 # Known Issues
 
 * May make githubs graphs and stats inaccurate since it relies on the commiter's 
-name and email address to generate statistics and links 
+name and email address to generate statistics and links
+* Bash History is messed up on Mac OS X (seems to work fine on Windows - mingw32/gitbash)
 
 # Building
 
