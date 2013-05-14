@@ -6,21 +6,19 @@ __git_pairing_prompt ()
   local os=`uname 2>/dev/null`
   case "$os" in
   "MINGW"*)
-    echo "windows"
     local untracked="*"
-    local pull_arrow="v"
-    local push_arrow="^"
+    local pull_arrow="<"
+    local push_arrow=">"
     ;;
   "Darwin"*)
     local untracked="✶"
-    local pull_arrow="▼ "  #"▾"
-    local push_arrow="▲ "  #"▴"
+    local pull_arrow="▼ "
+    local push_arrow="▲ "
     ;;
   "debian"*|"ubuntu"*|"redhat"*|"centos"*|"freebsd"*)
-    echo "linux"
     local untracked="✶"
-    local pull_arrow="▼ "  #"▾"
-    local push_arrow="▲ "  #"▴"
+    local pull_arrow="▼ "
+    local push_arrow="▲ "
     ;;
   esac
 
