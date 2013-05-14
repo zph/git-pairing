@@ -5,7 +5,7 @@ __git_pairing_prompt ()
 {
   local os=`uname 2>/dev/null`
   case "$os" in
-  "MINGW"*)
+  "MINGW"*|"CYGWIN"*)
     local untracked="*"
     local pull_arrow="-"
     local push_arrow="+"
@@ -15,7 +15,7 @@ __git_pairing_prompt ()
     local pull_arrow="▼ "
     local push_arrow="▲ "
     ;;
-  "debian"*|"ubuntu"*|"redhat"*|"centos"*|"freebsd"*)
+  "Linux"*|"GNU"*|"FreeBSD"*)
     local untracked="✶"
     local pull_arrow="▼ "
     local push_arrow="▲ "
