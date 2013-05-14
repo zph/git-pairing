@@ -7,8 +7,8 @@ __git_pairing_prompt ()
   case "$os" in
   "MINGW"*)
     local untracked="*"
-    local pull_arrow="<"
-    local push_arrow=">"
+    local pull_arrow="^"
+    local push_arrow="^"
     ;;
   "Darwin"*)
     local untracked="✶"
