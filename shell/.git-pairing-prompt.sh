@@ -76,18 +76,11 @@ __git_pairing_prompt ()
 
 # Color codes to use:
 # http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
+# http://mywiki.wooledge.org/BashFAQ/053
+# http://mywiki.wooledge.org/BashFAQ/037
 # Likewise, you could always alter your terminal preferences color scheme
 
-# color text on normal background, do not escape color codes here
-# escape around whole prompt in PS1
 c_red=$(tput setaf 1);
 c_green=$(tput setaf 2);
 c_yellow=$(tput setaf 3);
 c_clear=$(tput sgr0);
-# white text on color background
-#c_clear () { printf '\e[m'"$*"; }
-#c_green () { printf '\e[42;1;37m'"$*"'\e[m'; }
-#c_yellow () { printf '\e[43;1;37m'"$*"'\e[m'; }
-#c_red () { printf '\e[41;1;37m'"$*"'\e[m'; }
-
-

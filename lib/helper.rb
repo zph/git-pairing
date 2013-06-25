@@ -117,7 +117,13 @@ module GitPairs
 source ~/.git-pairing-prompt.sh
 PROMPT_COMMAND=__git_pairing_prompt
 jam
+      puts ""
+      puts Paint["If you had an older version previously installed, edit your .bash_profile/.bashrc file to remove the following lines:", :yellow]
+      puts Paint['source ~/.git-pairing-prompt.sh', :yellow]
+      puts Paint['export PS1="\[$(__git_pairing_prompt)\] "', :yellow]
+      puts ""
       confirmed = agree("Configure git-pairing bash prompt? ")
+      puts ""
       if confirmed
         # copy shell script to user's home dir
         home = File.expand_path('~')
@@ -134,7 +140,7 @@ jam
         puts Paint["Please re-source your bash_profile or bashrc", :yellow]
         puts Paint["(i.e., source ~/.bash_profile", :yellow]
         puts ""
-        puts Paint["Feel free to edit ~/.git-pairing-prompt.sh to suit your prompt preferences", :yellow]
+        puts Paint["Feel free to edit ~/.git-pairing-prompt.sh to suit your prompt preferences", :blue]
         puts ""
       end
     end

@@ -3,7 +3,7 @@ $platform ||= RUBY_PLATFORM
 
 Gem::Specification.new do |s|
   s.name = 'git-pairing'
-  s.version = "0.4.0"
+  s.version = "0.5.0"
   s.author = "Steve Quince"
   s.email = 'steve.quince@gmail.com'
   s.homepage = 'https://github.com/glg/git-pairing'
