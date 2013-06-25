@@ -67,11 +67,11 @@ __git_pairing_prompt ()
     b_prompt="[${b}${ahead_r}${behind_r}${u_prompt}]"
   fi
   if [ -n "$s" ]; then
-    printf "%s $(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
+     PS1="${d_prompt} \[${c_red}\]${b_prompt}\[${c_yellow}\]${p_prompt}\[${c_clear}\] "
   else
-    printf "%s $(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
-  fi
+     PS1="${d_prompt} \[${c_green}\]${b_prompt}\[${c_yellow}\]${p_prompt}\[${c_clear}\] "
 
+  fi
 }
 
 # Color codes to use:
@@ -80,14 +80,14 @@ __git_pairing_prompt ()
 
 # color text on normal background, do not escape color codes here
 # escape around whole prompt in PS1
-# e.g., export PS1="\[\$(__git_pairing_prompt)\] "
-c_clear () { printf '\e[m'"$*"; }
-c_green () { printf '\e[0;32m'"$*"'\e[m'; }
-c_yellow () { printf '\e[0;33m'"$*"'\e[m'; }
-c_red () { printf '\e[0;31m'"$*"'\e[m'; }
-
+c_red=$(tput setaf 1);
+c_green=$(tput setaf 2);
+c_yellow=$(tput setaf 3);
+c_clear=$(tput sgr0);
 # white text on color background
 #c_clear () { printf '\e[m'"$*"; }
 #c_green () { printf '\e[42;1;37m'"$*"'\e[m'; }
 #c_yellow () { printf '\e[43;1;37m'"$*"'\e[m'; }
 #c_red () { printf '\e[41;1;37m'"$*"'\e[m'; }
+
+

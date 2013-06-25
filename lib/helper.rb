@@ -115,7 +115,7 @@ module GitPairs
       self.git_installed?
       install_with = <<jam
 source ~/.git-pairing-prompt.sh
-export PS1="\\[\\$(__git_pairing_prompt)\\] "
+PROMPT_COMMAND=__git_pairing_prompt
 jam
       confirmed = agree("Configure git-pairing bash prompt? ")
       if confirmed
