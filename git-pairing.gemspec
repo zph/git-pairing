@@ -29,4 +29,6 @@ Gem::Specification.new do |s|
   s.add_dependency('win32console') if ($platform.to_s =~ /win32|mswin|mingw|cygwin/ || $platform.to_s == 'ruby')
   s.add_development_dependency('rake')
   s.add_development_dependency('rdoc')
+  s.add_development_dependency('rspec')
+  s.add_development_dependency('pry')
 end
