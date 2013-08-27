@@ -5,41 +5,6 @@ __git_pairing_prompt ()
 {
   local os=`uname 2>/dev/null`
 
- case "$os" in
-  # Color codes to use:
-  # http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
-  # http://mywiki.wooledge.org/BashFAQ/053
-  # http://mywiki.wooledge.org/BashFAQ/037
-  # Likewise, you could always alter your terminal preferences color scheme
-  "MINGW"*|"CYGWIN"*)
-    local untracked="*"
-    local pull_arrow="-"
-    local push_arrow="+"
-    c_red=$(printf setaf 1);
-    c_green=$(printf setaf 2);
-    c_yellow=$(printf setaf 3);
-    c_clear=$(printf sgr0);
-    ;;
-  "Darwin"*)
-    local untracked="✶"
-    local pull_arrow="▼ "
-    local push_arrow="▲ "
-    c_red=$(tput setaf 1);
-    c_green=$(tput setaf 2);
-    c_yellow=$(tput setaf 3);
-    c_clear=$(tput sgr0);
-    ;;
-  "Linux"*|"GNU"*|"FreeBSD"*)
-    local untracked="✶"
-    local pull_arrow="▼ "
-    local push_arrow="▲ "
-    c_red=$(tput setaf 1);
-    c_green=$(tput setaf 2);
-    c_yellow=$(tput setaf 3);
-    c_clear=$(tput sgr0);
-    ;;
-  esac
-
   local d="$(pwd  2>/dev/null)"; # d = current working directory
   local tb="$(git symbolic-ref HEAD 2>/dev/null)";
   local b="${tb##refs/heads/}"; # b = branch
@@ -69,26 +34,69 @@ __git_pairing_prompt ()
   local u_prompt=""         # untracked files
   local d_prompt="$d"       # directory portion
 
-  if [[ "$s" == *\?\?* ]]; then
-    u_prompt=" ${untracked}"
-  fi
-  if [ -n "$p" ]; then
-    p_prompt="[${p}]"
-  fi
-  if [ "$push_count" -gt 0  ]; then
-    ahead_r=" ${push_arrow}${push_count}"
-  fi
-  if [ "$pull_count" -gt 0  ]; then
-    behind_r=" ${pull_arrow}${pull_count}"
-  fi
-  if [ -n "$b" ]; then
-    b_prompt="[${b}${ahead_r}${behind_r}${u_prompt}]"
-  fi
-  if [ -n "$s" ]; then
-     PS1="${d_prompt} \[${c_red}\]${b_prompt}\[${c_yellow}\]${p_prompt}\[${c_clear}\] "
-  else
-     PS1="${d_prompt} \[${c_green}\]${b_prompt}\[${c_yellow}\]${p_prompt}\[${c_clear}\] "
-
-  fi
+  case "$os" in
+  # Color codes to use:
+  # http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
+  # http://mywiki.wooledge.org/BashFAQ/053
+  # http://mywiki.wooledge.org/BashFAQ/037
+  # Likewise, you could always alter your terminal preferences color scheme
+  "MINGW"*|"CYGWIN"*)
+    local untracked="*"
+    local pull_arrow="-"
+    local push_arrow="+"
+    c_red () { printf '\e[0;31m'"$*"'\e[m'; }
+    c_green () { printf '\e[0;32m'"$*"'\e[m'; }
+    c_yellow () { printf '\e[0;33m'"$*"'\e[m'; }
+    c_clear () { printf '\e[m'"$*"; }
+    if [[ "$s" == *\?\?* ]]; then
+      u_prompt=" ${untracked}"
+    fi
+    if [ -n "$p" ]; then
+      p_prompt="[${p}]"
+    fi
+    if [ "$push_count" -gt 0  ]; then
+      ahead_r=" ${push_arrow}${push_count}"
+    fi
+    if [ "$pull_count" -gt 0  ]; then
+      behind_r=" ${pull_arrow}${pull_count}"
+    fi
+    if [ -n "$b" ]; then
+      b_prompt="[${b}${ahead_r}${behind_r}${u_prompt}]"
+    fi
+    if [ -n "$s" ]; then
+      PS1='\[$(printf "%s $(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}")\] '
+    else
+      PS1='\[$(printf "%s $(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}")\] '
+    fi
+    ;;
+  "Darwin"*|"Linux"*|"GNU"*|"FreeBSD"*)
+    local untracked="✶"
+    local pull_arrow="▼ "
+    local push_arrow="▲ "
+    c_red=$(tput setaf 1);
+    c_green=$(tput setaf 2);
+    c_yellow=$(tput setaf 3);
+    c_clear=$(tput sgr0);
+    if [[ "$s" == *\?\?* ]]; then
+      u_prompt=" ${untracked}"
+    fi
+    if [ -n "$p" ]; then
+      p_prompt="[${p}]"
+    fi
+    if [ "$push_count" -gt 0  ]; then
+      ahead_r=" ${push_arrow}${push_count}"
+    fi
+    if [ "$pull_count" -gt 0  ]; then
+      behind_r=" ${pull_arrow}${pull_count}"
+    fi
+    if [ -n "$b" ]; then
+      b_prompt="[${b}${ahead_r}${behind_r}${u_prompt}]"
+    fi
+    if [ -n "$s" ]; then
+       PS1="${d_prompt} \[${c_red}\]${b_prompt}\[${c_yellow}\]${p_prompt}\[${c_clear}\] "
+    else
+       PS1="${d_prompt} \[${c_green}\]${b_prompt}\[${c_yellow}\]${p_prompt}\[${c_clear}\] "
+    fi
+    ;;
+  esac
 }
-
