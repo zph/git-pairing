@@ -4,21 +4,39 @@
 __git_pairing_prompt ()
 {
   local os=`uname 2>/dev/null`
-  case "$os" in
+
+ case "$os" in
+  # Color codes to use:
+  # http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
+  # http://mywiki.wooledge.org/BashFAQ/053
+  # http://mywiki.wooledge.org/BashFAQ/037
+  # Likewise, you could always alter your terminal preferences color scheme
   "MINGW"*|"CYGWIN"*)
     local untracked="*"
     local pull_arrow="-"
     local push_arrow="+"
+    c_red=$(printf setaf 1);
+    c_green=$(printf setaf 2);
+    c_yellow=$(printf setaf 3);
+    c_clear=$(printf sgr0);
     ;;
   "Darwin"*)
     local untracked="✶"
     local pull_arrow="▼ "
     local push_arrow="▲ "
+    c_red=$(tput setaf 1);
+    c_green=$(tput setaf 2);
+    c_yellow=$(tput setaf 3);
+    c_clear=$(tput sgr0);
     ;;
   "Linux"*|"GNU"*|"FreeBSD"*)
     local untracked="✶"
     local pull_arrow="▼ "
     local push_arrow="▲ "
+    c_red=$(tput setaf 1);
+    c_green=$(tput setaf 2);
+    c_yellow=$(tput setaf 3);
+    c_clear=$(tput sgr0);
     ;;
   esac
 
@@ -74,13 +92,3 @@ __git_pairing_prompt ()
   fi
 }
 
-# Color codes to use:
-# http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
-# http://mywiki.wooledge.org/BashFAQ/053
-# http://mywiki.wooledge.org/BashFAQ/037
-# Likewise, you could always alter your terminal preferences color scheme
-
-c_red=$(tput setaf 1);
-c_green=$(tput setaf 2);
-c_yellow=$(tput setaf 3);
-c_clear=$(tput sgr0);
