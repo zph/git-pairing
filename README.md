@@ -49,20 +49,13 @@ do not suit your fancy.
 ### Git-Pairing Command Prompt
 
 git-pairing can display the pairing partners configured for a project on the
-command line along with other useful information when in a git repo.
+command line. This also allows you to keep track of important info when in a git repo.
 
 Executing `git pair --prompt` adds this feature.
 * shell script is copied to your home directory
-* adds a line to your .bash_profile/.bashrc to source a shell script and
-If you have previously installed an older version manually remove the following line from your .bash_profile/.bashrc file
-* `export PS1="\[$(__git_pairing_prompt)\] "`
-set your PS1 to the __git_pairing_prompt() function
-  * `source ~/.git-pairing-prompt.sh` 
-  * `PROMPT_COMMAND=__git_pairing_prompt`
+* adds 2 lines to your .bash_profile/.bashrc to source a shell script
 * shell script and bash_profile have default behavior that can easily be
 customized by simply editing these default entries
-
-This allows users to keep track of important info when you are in a git repo.
 
 # Known Issues
 
