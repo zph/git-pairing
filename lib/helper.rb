@@ -113,14 +113,22 @@ module GitPairs
 
     def self.pair
       self.git_installed?
-      install_with = <<jam
+      if self.windows?
+        install_with = <<jam
+source ~/.git-pairing-prompt.sh
+export PS1="\\[\\$(__git_pairing_prompt)\\] "
+jam
+      else
+        install_with = <<jam
 source ~/.git-pairing-prompt.sh
 PROMPT_COMMAND=__git_pairing_prompt
 jam
-      puts ""
-      puts Paint["If you had an older version previously installed, edit your .bash_profile/.bashrc file to remove the following lines:", :yellow]
-      puts Paint['source ~/.git-pairing-prompt.sh', :yellow]
-      puts Paint['export PS1="\[$(__git_pairing_prompt)\] "', :yellow]
+        puts ""
+        puts Paint["If you had an older version previously installed, edit your .bash_profile/.bashrc file to remove the following lines:", :yellow]
+        puts Paint['source ~/.git-pairing-prompt.sh', :yellow]
+        puts Paint['export PS1="\[$(__git_pairing_prompt)\] "', :yellow]
+      end
+
       puts ""
       confirmed = agree("Configure git-pairing bash prompt? ")
       puts ""

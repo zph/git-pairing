@@ -64,9 +64,9 @@ __git_pairing_prompt ()
       b_prompt="[${b}${ahead_r}${behind_r}${u_prompt}]"
     fi
     if [ -n "$s" ]; then
-      PS1='\[$(printf "%s $(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}")\] '
+      printf "%s $(c_red "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
     else
-      PS1='\[$(printf "%s $(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}")\] '
+      printf "%s $(c_green "%%s")$(c_yellow "%%s")$(c_clear)" "${d_prompt}" "${b_prompt}" "${p_prompt}"
     fi
     ;;
   "Darwin"*|"Linux"*|"GNU"*|"FreeBSD"*)
