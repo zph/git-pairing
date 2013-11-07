@@ -32,8 +32,6 @@ terminal/console of choice
     $ gem install git-pairing 
 ```
 
-# Customizing
-
 ### Configuration
 
 The first time that `git pair` is executed, it will create a config file
