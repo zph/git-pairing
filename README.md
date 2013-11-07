@@ -23,37 +23,35 @@ See help for more details and available options on the commands
 
 # Installing
 
-To grab the latest stable release `gem install git-pairing`
+1. Install the latest stable release
+        ```
+            $ gem install git-pairing 
+        ```
 
-Or, clone this repo and execute the following command in your
-terminal/console of choice
+1. Configure
 
-```
-    $ gem install git-pairing 
-```
+        The first time that `git pair` is executed, it will create a config file
+        in the user's home directory `~/.pairs`
 
-### Configuration
+        This is just a yaml file that you can edit manually or update via the
+        available commands (e.g., `git pair --add sq`).  Included in the config is
+        the default delimiters used when setting the pair names, email
+        addresses, and partner initials
+        into the git config.  Feel free to update these as well if the defaults
+        do not suit your fancy.
 
-The first time that `git pair` is executed, it will create a config file
-in the user's home directory `~/.pairs`
+1. Customize your command prompt (optional - but useful)
 
-This is just a yaml file that you can edit manually or update via the
-available commands (e.g., `git pair --add sq`).  Included in the config is
-the default delimiters used when setting the pair names, email
-addresses, and partner initials
-into the git config.  Feel free to update these as well if the defaults
-do not suit your fancy.
+        ![Git-Pairing Prompt](master/gprompt.jpg "git-pairing command prompt")
 
-### Git-Pairing Command Prompt
+        git-pairing can display the pairing partners configured for a project on the
+        command line. This also allows you to keep track of important info when in a git repo.
 
-git-pairing can display the pairing partners configured for a project on the
-command line. This also allows you to keep track of important info when in a git repo.
-
-Executing `git pair --prompt` adds this feature.
-* shell script is copied to your home directory
-* adds 2 lines to your .bash_profile/.bashrc to source a shell script
-* shell script and bash_profile have default behavior that can easily be
-customized by simply editing these default entries
+        Executing `git pair --prompt` adds this feature.
+        * shell script is copied to your home directory
+        * adds 2 lines to your .bash_profile/.bashrc to source a shell script
+        * shell script and bash_profile have default behavior that can easily be
+        customized by simply editing these default entries
 
 # Known Issues
 
