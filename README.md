@@ -43,7 +43,7 @@ See help for more details and available options on the commands
 
 1. Customize your command prompt (optional - but useful)
 
-    ![Git-Pairing Prompt](master/gprompt.jpg "git-pairing command prompt")
+    ![Git-Pairing Prompt](gprompt.jpg "git-pairing command prompt")
 
     git-pairing can display the pairing partners configured for a project on the
     command line. This also allows you to keep track of important info when in a git repo.
