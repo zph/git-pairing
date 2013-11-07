@@ -45,6 +45,8 @@ See help for more details and available options on the commands
 
     ![Git-Pairing Prompt](gprompt.jpg "git-pairing command prompt")
 
+    ![Git-Pairing Prompt - Clean](gprompt-clean.jpg "git-pairing command prompt - clean")
+
     git-pairing can display the pairing partners configured for a project on the
     command line. This also allows you to keep track of important info when in a git repo.
 
