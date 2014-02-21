@@ -95,11 +95,11 @@ module GitPairs
       else
         puts ""
         puts Paint["Please provide info for: #{initials}", :yellow]
-        name = ask("Full Name: ")
+        name = ask("Full Name: ").to_s
         user = ask("Git Username: ")
         #just in case they supply email address
-        user = user.split('@')[0]
-        email = ask("Email: ")
+        user = user.split('@')[0].to_s
+        email = ask("Email: ").to_s
         partner = {initials => {'name' => name, 'username' => user, 'email' => email}}
         conf["pairs"].update(partner)
         temp_conf = YAML::Store.new(path_to_conf)
